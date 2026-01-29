@@ -548,9 +548,10 @@ body{
 /* Folder label: move to the top tab (as in reference) + coherent typography */
 .folderLabel{
   left: 56px !important;
-  top: 18px !important;
+  top: 3px !important; /* moved up 15px */
   bottom: auto !important;
   mix-blend-mode: normal !important;
+  transition: transform .28s ease, opacity .28s ease;
 }
 .folderTitle{
   font-size: 16px !important;
@@ -576,4 +577,26 @@ body{
   opacity:1;
   pointer-events:auto;
   transform: translateX(-50%) translateY(-18px);
+}
+
+
+/* Folder label synced with opening animation */
+.folderLabel{
+  top: 3px !important; /* moved ~15px up */
+  left: 64px !important;
+  transition: transform .28s ease, opacity .28s ease;
+}
+.folderWrap.open .folderLabel{
+  transform: translateY(-6px);
+  opacity: .95;
+}
+
+.folderTitle{
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  color: rgba(229,231,235,.95) !important;
+}
+.folderSub{
+  font-size: 11px !important;
+  color: rgba(203,213,225,.9) !important;
 }

@@ -3,55 +3,14 @@
 const projects = [
   {
     id: "a-petra",
-    title: "A Petra — Bomboniere Laviche",
-    meta: "Brand identity • 2025",
+    title: "A Petra",
+    meta: "Brand identity • Bomboniere Laviche",
     badge: "Case study",
-    description: "Identità minimale con accenti “lava”: palette, tipografia e mockup packaging.",
-    slides: ["assets/a-petra-brand-identity.png"],
-  },
-  {
-    id: "zuccarata",
-    title: "Zuccarata — Pasticceria",
-    meta: "Brand identity • 2025",
-    badge: "Project",
-    description: "Sistema visivo caldo e riconoscibile, pensato per contenuti social e vetrina.",
+    description: "Brand identity minimale ispirata alla pietra lavica: palette, tipografia e applicazioni.",
     slides: [
-      svgDataUri("Zuccarata", "Pasticceria • Visual system & social kit", "#f97316", "#0b1220"),
-      svgDataUri("Zuccarata", "Palette & layout", "#f97316", "#070a0f"),
-    ],
-  },
-  {
-    id: "nud",
-    title: "NUD — Asian Kitchen",
-    meta: "Brand identity • 2025",
-    badge: "Project",
-    description: "Tono urban e dinamico: identità pronta per video brevi, menù e comunicazione.",
-    slides: [
-      svgDataUri("NUD", "Asian kitchen • Brand rhythm", "#3b82f6", "#071024"),
-      svgDataUri("NUD", "Template social & pattern", "#3b82f6", "#070a0f"),
-    ],
-  },
-  {
-    id: "dinaink",
-    title: "DinaInk Tattoo Studio",
-    meta: "Brand identity • 2025",
-    badge: "Project",
-    description: "Contrasti netti e carattere forte, con applicazioni per studio e social.",
-    slides: [
-      svgDataUri("DinaInk", "Tattoo studio • Bold & authentic", "#ef4444", "#090a12"),
-      svgDataUri("DinaInk", "Layout & typography", "#ef4444", "#070a0f"),
-    ],
-  },
-  {
-    id: "magic-pizza",
-    title: "Magic Pizza",
-    meta: "Brand refresh • 2025",
-    badge: "Project",
-    description: "Linee guida visive e sistema promo: leggibile, coerente, facile da mantenere.",
-    slides: [
-      svgDataUri("Magic Pizza", "Promo system & visual guidelines", "#22c55e", "#07130e"),
-    ],
-  },
+      "assets/a-petra-brand-identity.png"
+    ]
+  }
 ];
 
 
@@ -96,6 +55,8 @@ function escapeXml(str) {
 }
 
 // --- UI logic
+document.addEventListener("DOMContentLoaded", () => {
+
 const folderWrap = document.querySelector(".folderWrap");
 const folderBtn = document.getElementById("folder");
 const closePopover = document.getElementById("closePopover");
@@ -242,11 +203,11 @@ closeModal.addEventListener("click", closeProject);
 modalBackdrop.addEventListener("click", closeProject);
 
 // About modal
-btnAbout.addEventListener("click", () => {
-  aboutModal.setAttribute("aria-hidden", "false");
-});
-closeAbout.addEventListener("click", () => aboutModal.setAttribute("aria-hidden", "true"));
-aboutBackdrop.addEventListener("click", () => aboutModal.setAttribute("aria-hidden", "true"));
+  function showAbout(){ aboutModal && aboutModal.setAttribute("aria-hidden","false"); }
+  function hideAbout(){ aboutModal && aboutModal.setAttribute("aria-hidden","true"); }
+  if(btnAbout) btnAbout.addEventListener("click", (e)=>{ e.preventDefault(); showAbout(); });
+  if(closeAbout) closeAbout.addEventListener("click", hideAbout);
+  if(aboutBackdrop) aboutBackdrop.addEventListener("click", hideAbout);
 
 // Keyboard
 window.addEventListener("keydown", (e) => {
@@ -267,23 +228,32 @@ window.addEventListener("keydown", (e) => {
 
 
 
-// --- Robust Info modal (in caso di modifiche future al markup)
-(function(){
-  const aboutModal = document.getElementById("aboutModal");
-  const btnAbout = document.getElementById("btnAbout");
-  const closeAbout = document.getElementById("closeAbout");
-  const aboutBackdrop = document.getElementById("aboutBackdrop");
+// Safety render (ensures portfolio loads)
+document.addEventListener("DOMContentLoaded", () => {
+  const grid = document.getElementById("projectGrid");
+  if (!grid || grid.children.length > 0) return;
 
-  if (btnAbout && aboutModal){
-    btnAbout.addEventListener("click", () => aboutModal.setAttribute("aria-hidden","false"));
-  }
-  if (closeAbout && aboutModal){
-    closeAbout.addEventListener("click", () => aboutModal.setAttribute("aria-hidden","true"));
-  }
-  if (aboutBackdrop && aboutModal){
-    aboutBackdrop.addEventListener("click", () => aboutModal.setAttribute("aria-hidden","true"));
-  }
-})();
+  projects.forEach((p) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "card";
+    card.innerHTML = `
+      <div class="preview">
+        <span class="badge">${p.badge}</span>
+        <img src="${p.slides[0]}" alt="Anteprima ${p.title}" />
+      </div>
+      <div class="cardBody">
+        <div class="cardTitle">${p.title}</div>
+        <div class="cardDesc">${p.description}</div>
+      </div>
+    `;
+    card.addEventListener("click", () => openProject(p));
+    grid.appendChild(card);
+  });
+});
+
+});
+
 
 // Smooth cursor-follow background (lerp)
 (function(){
@@ -304,24 +274,4 @@ window.addEventListener("keydown", (e) => {
     requestAnimationFrame(tick);
   }
   tick();
-})();
-
-// Info button (guaranteed)
-(function(){
-  const btn = document.getElementById("btnAbout");
-  const modal = document.getElementById("aboutModal");
-  const close = document.getElementById("closeAbout");
-  const back = document.getElementById("aboutBackdrop");
-
-  if(btn && modal){
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      modal.setAttribute("aria-hidden","false");
-    });
-  }
-  function hide(){
-    if(modal) modal.setAttribute("aria-hidden","true");
-  }
-  if(close) close.addEventListener("click", hide);
-  if(back) back.addEventListener("click", hide);
 })();
