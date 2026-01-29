@@ -717,3 +717,49 @@ body{
 .slideWrap.zoomed #slideImg:active{
   cursor: grabbing;
 }
+
+
+/* --- v9 fixes --- */
+
+/* Info tooltip (reliable wrapper) */
+.infoWrap{ position: relative; display: inline-flex; align-items:center; }
+.infoWrap .infoTip{
+  position: absolute;
+  top: 46px;
+  right: 0;
+  width: 360px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(10,14,20,.76);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 60px rgba(0,0,0,.55);
+  color: rgba(229,231,235,.92);
+  font-size: 12px;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity .16s ease, transform .16s ease;
+  text-align:left;
+  z-index: 200;
+}
+.infoWrap:hover .infoTip{
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (max-width: 640px){
+  .infoWrap .infoTip{ width: min(92vw, 420px); right: -8px; }
+}
+
+/* Folder more square (strong override) */
+.folderWrap{ height: 560px !important; }
+.folder{
+  width: min(430px, 92vw) !important;
+  height: 360px !important;
+}
+.folderBody{
+  height: 270px !important;
+}
+.popover{ top: 305px !important; }
+
