@@ -305,3 +305,23 @@ window.addEventListener("keydown", (e) => {
   }
   tick();
 })();
+
+// Info button (guaranteed)
+(function(){
+  const btn = document.getElementById("btnAbout");
+  const modal = document.getElementById("aboutModal");
+  const close = document.getElementById("closeAbout");
+  const back = document.getElementById("aboutBackdrop");
+
+  if(btn && modal){
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      modal.setAttribute("aria-hidden","false");
+    });
+  }
+  function hide(){
+    if(modal) modal.setAttribute("aria-hidden","true");
+  }
+  if(close) close.addEventListener("click", hide);
+  if(back) back.addEventListener("click", hide);
+})();

@@ -543,3 +543,37 @@ body{
 .name, .role, .chip, .popoverTitle, .popoverSub, .cardTitle, .cardDesc, .mtName, .mtMeta{
   mix-blend-mode:difference;
 }
+
+
+/* Folder label: move to the top tab (as in reference) + coherent typography */
+.folderLabel{
+  left: 56px !important;
+  top: 18px !important;
+  bottom: auto !important;
+  mix-blend-mode: normal !important;
+}
+.folderTitle{
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.02em !important;
+  color: rgba(229,231,235,.92) !important;
+  text-shadow: 0 2px 12px rgba(0,0,0,.35) !important;
+}
+.folderSub{
+  font-size: 12px !important;
+  font-weight: 650 !important;
+  color: rgba(148,163,184,.92) !important;
+  margin-top: 4px !important;
+  text-shadow: 0 2px 12px rgba(0,0,0,.25) !important;
+}
+
+/* Hover-open behavior (CSS fallback + smoother) */
+.folderWrap:hover .folderTop{
+  transform: perspective(900px) rotateX(-58deg) translateY(-4px);
+  filter: saturate(1.05) brightness(1.04);
+}
+.folderWrap:hover .popover{
+  opacity:1;
+  pointer-events:auto;
+  transform: translateX(-50%) translateY(-18px);
+}
