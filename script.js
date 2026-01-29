@@ -2,46 +2,45 @@
 // Minimal data-driven approach: edit this array to add projects.
 const projects = [
   {
-    id: "apetra",
-    title: "A Petra",
-    meta: "Brand identity • Minimal • 2025",
-    badge: "Real example",
-    description: "Concept minimal: una curva leggera per trasmettere giovinezza, con richiami alla tradizione.",
+    id: "a-petra",
+    title: "A Petra — Bomboniere Laviche",
+    meta: "Brand identity • 2025",
+    badge: "Case study",
+    description: "Identità minimale con accenti “lava”: palette, tipografia e mockup packaging.",
     slides: [
-      "assets/apetra-01.svg",
-      "assets/apetra-02.svg",
+      "assets/a-petra-brand-identity.png"
     ],
   },
   {
-    id: "zuccarata",
-    title: "Zuccarata",
-    meta: "Visual system • Food • 2025",
-    badge: "Demo",
-    description: "Identità calda e golosa, pensata per social e packaging in modo coerente.",
-    slides: ["assets/zuccarata-01.svg"],
+    id: "nud",
+    title: "NUD — Asian Kitchen",
+    meta: "Visual system • 2025",
+    badge: "Project",
+    description: "Sistema visivo dinamico e urban, pensato per contenuti social e menù.",
+    slides: ["assets/nud-01.svg"],
   },
   {
-    id: "nud",
-    title: "NUD",
-    meta: "Brand rhythm • Restaurant • 2025",
-    badge: "Demo",
-    description: "Sistema visivo dinamico: ritmo, energia, modernità. Perfetto per contenuti video brevi.",
-    slides: ["assets/nud-01.svg"],
+    id: "zuccarata",
+    title: "Zuccarata — Pasticceria",
+    meta: "Visual identity • 2025",
+    badge: "Project",
+    description: "Tono caldo e goloso: coerenza tra social, packaging e comunicazione.",
+    slides: ["assets/zuccarata-01.svg"],
   },
   {
     id: "dinaink",
     title: "DinaInk Tattoo Studio",
-    meta: "Bold identity • Tattoo • 2025",
-    badge: "Demo",
-    description: "Contrasti netti e tono autentico: un brand che “si sente vero”.",
+    meta: "Brand identity • 2025",
+    badge: "Project",
+    description: "Contrasti netti e personalità forte, con applicazioni per social e studio.",
     slides: ["assets/dinaink-01.svg"],
   },
   {
     id: "studio-zen",
     title: "Studio Zen",
-    meta: "Wellness identity • Concept",
-    badge: "Demo",
-    description: "Un esempio creato qui: minimal + premium, palette soft e tipografia pulita.",
+    meta: "Concept • Wellness",
+    badge: "Concept",
+    description: "Estetica premium e minimale: palette soft, tipografia pulita, layout modulare.",
     slides: [
       svgDataUri("Studio Zen", "Wellness • Calm & premium", "#a78bfa", "#0b1020"),
       svgDataUri("Studio Zen", "Social kit & grid", "#a78bfa", "#090a12"),
@@ -50,14 +49,15 @@ const projects = [
   {
     id: "nordica-coffee",
     title: "Nordica Coffee",
-    meta: "Packaging • Coffee • Concept",
-    badge: "Demo",
-    description: "Un esempio creato qui: brand di caffè con estetica nordica e pattern modulare.",
+    meta: "Concept • Coffee packaging",
+    badge: "Concept",
+    description: "Packaging con pattern modulare e look nordico: semplice, memorabile, scalabile.",
     slides: [
       svgDataUri("Nordica Coffee", "Packaging concept & pattern", "#60a5fa", "#091826"),
     ],
   },
 ];
+
 
 // --- Helpers: generate quick SVG slides without extra files
 function svgDataUri(title, subtitle, accent = "#22c55e", bg = "#0b0f14") {
@@ -264,8 +264,14 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-// Small polish: prevent # link jump for CV placeholder
-document.getElementById("btnDownload").addEventListener("click", (e) => {
-  e.preventDefault();
   alert("Placeholder CV: sostituisci questo link con il tuo PDF.");
+});
+
+
+// Background follows cursor (subtle)
+window.addEventListener("mousemove", (e) => {
+  const x = Math.round((e.clientX / window.innerWidth) * 100);
+  const y = Math.round((e.clientY / window.innerHeight) * 100);
+  document.documentElement.style.setProperty("--mx", x + "%");
+  document.documentElement.style.setProperty("--my", y + "%");
 });

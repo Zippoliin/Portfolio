@@ -13,10 +13,7 @@
 
   <header class="topbar">
     <div class="identity">
-      <div class="avatarStack" aria-hidden="true">
-        <img src="assets/davide-portrait-1.jpeg" alt="" />
-        <img src="assets/davide-portrait-2.png" alt="" />
-      </div>
+      <div class="avatarSingle"><img src="assets/davide-portrait-1.jpeg" alt="Davide Di Mauro" /></div>
       <div class="idText">
         <div class="name">Davide Di Mauro</div>
         <div class="role">Brand Designer</div>
@@ -25,33 +22,18 @@
 
     <nav class="actions" aria-label="Azioni">
       <button class="chip" id="btnAbout" type="button" aria-haspopup="dialog" aria-controls="aboutModal">Info</button>
-      <a class="chip" href="#" id="btnDownload" title="Scarica CV (placeholder)">CV</a>
-      <a class="chip" href="mailto:ciao@davidedimauro.it" title="Email (modifica con la tua)">Email</a>
+      <a class="chip" href="assets/Davide-Di-Mauro-CV.pdf" id="btnDownload" download>CV</a>
+      <a class="chip" href="mailto:davidedimauro.ve@gmail.com" title="Email (modifica con la tua)">Email</a>
     </nav>
   </header>
 
   <main class="stage" aria-label="Portfolio">
-    <section class="hint" aria-label="Istruzioni">
-      <div class="kbdRow">
-        <span class="kbd">Hover</span> per aprire la cartella
-        <span class="dot">•</span>
-        <span class="kbd">Click</span> per fissarla
-        <span class="dot">•</span>
-        <span class="kbd">Esc</span> per chiudere
-      </div>
-    </section>
-
     <section class="folderWrap" aria-label="Cartella portfolio">
+      
       <button id="folder" class="folder" type="button" aria-haspopup="dialog" aria-controls="folderPopover" aria-expanded="false">
-        <div class="folderTop" aria-hidden="true"></div>
-        <div class="folderBody" aria-hidden="true"></div>
-        <div class="folderLabel" aria-hidden="true">
-          <div class="folderTitle">Portfolio</div>
-          <div class="folderSub">Brand identities</div>
-        </div>
+        <img class="folderImg" src="assets/folder-portfolio.png" alt="Portfolio" />
       </button>
-
-      <div id="folderPopover" class="popover" role="dialog" aria-label="Seleziona una brand identity">
+<div id="folderPopover" class="popover" role="dialog" aria-label="Seleziona una brand identity">
         <div class="popoverHeader">
           <div class="popoverTitle">Brand identities</div>
           <div class="popoverSub">Apri un progetto per vedere la presentazione</div>
@@ -60,8 +42,6 @@
 
         <div class="grid" id="projectGrid" role="list"></div>
 
-        <div class="popoverFooter">
-          <div class="smallNote">Tip: sostituisci le anteprime in <span class="mono">assets/</span> e aggiorna <span class="mono">projects</span> in <span class="mono">script.js</span>.</div>
         </div>
       </div>
     </section>
@@ -97,8 +77,8 @@
     <div class="modalInner about">
       <div class="modalTop">
         <div class="modalTitle">
-          <div class="mtName">Ciao 👋</div>
-          <div class="mtMeta">Portfolio in stile “cartella Mac” — semplice, chiaro, cliccabile.</div>
+          <div class="mtName">Piacere, Davide.</div>
+          <div class="mtMeta">Brand Designer — identità visive, sistemi grafici e presentazioni pronte per essere usate.</div>
         </div>
         <div class="modalActions">
           <button class="chip danger" id="closeAbout" type="button">Chiudi</button>
@@ -107,16 +87,11 @@
 
       <div class="aboutBody">
         <p>
-          Questo template è pensato per essere intuitivo anche per chi non è “tech”:
-          una sola cartella al centro, che si apre e mostra i progetti.
+          Progetto brand identity, visual system e asset coerenti (logo, palette, tipografia, pattern, mockup, social kit).
+          L'obiettivo è far percepire il tuo brand in modo immediato e memorabile.
         </p>
-        <ul>
-          <li>Desktop: passa il mouse sulla cartella (hover) oppure clicca per tenerla aperta.</li>
-          <li>Mobile: tocca la cartella per aprire/chiudere.</li>
-          <li>Dentro un progetto: usa ← → o i pulsanti per cambiare slide.</li>
-        </ul>
-        <p class="smallNote">
-          Vuoi aggiungere le tue brand identity? Metti i file in <span class="mono">assets/</span> e aggiorna l'array <span class="mono">projects</span> in <span class="mono">script.js</span>.
+        <p>
+          Se vuoi lavorare insieme, scrivimi a <a class="inlineLink" href="mailto:davidedimauro.ve@gmail.com">davidedimauro.ve@gmail.com</a>.
         </p>
       </div>
     </div>
