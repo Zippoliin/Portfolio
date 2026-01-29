@@ -7,56 +7,53 @@ const projects = [
     meta: "Brand identity • 2025",
     badge: "Case study",
     description: "Identità minimale con accenti “lava”: palette, tipografia e mockup packaging.",
+    slides: ["assets/a-petra-brand-identity.png"],
+  },
+  {
+    id: "zuccarata",
+    title: "Zuccarata — Pasticceria",
+    meta: "Brand identity • 2025",
+    badge: "Project",
+    description: "Sistema visivo caldo e riconoscibile, pensato per contenuti social e vetrina.",
     slides: [
-      "assets/a-petra-brand-identity.png"
+      svgDataUri("Zuccarata", "Pasticceria • Visual system & social kit", "#f97316", "#0b1220"),
+      svgDataUri("Zuccarata", "Palette & layout", "#f97316", "#070a0f"),
     ],
   },
   {
     id: "nud",
     title: "NUD — Asian Kitchen",
-    meta: "Visual system • 2025",
+    meta: "Brand identity • 2025",
     badge: "Project",
-    description: "Sistema visivo dinamico e urban, pensato per contenuti social e menù.",
-    slides: ["assets/nud-01.svg"],
-  },
-  {
-    id: "zuccarata",
-    title: "Zuccarata — Pasticceria",
-    meta: "Visual identity • 2025",
-    badge: "Project",
-    description: "Tono caldo e goloso: coerenza tra social, packaging e comunicazione.",
-    slides: ["assets/zuccarata-01.svg"],
+    description: "Tono urban e dinamico: identità pronta per video brevi, menù e comunicazione.",
+    slides: [
+      svgDataUri("NUD", "Asian kitchen • Brand rhythm", "#3b82f6", "#071024"),
+      svgDataUri("NUD", "Template social & pattern", "#3b82f6", "#070a0f"),
+    ],
   },
   {
     id: "dinaink",
     title: "DinaInk Tattoo Studio",
     meta: "Brand identity • 2025",
     badge: "Project",
-    description: "Contrasti netti e personalità forte, con applicazioni per social e studio.",
-    slides: ["assets/dinaink-01.svg"],
-  },
-  {
-    id: "studio-zen",
-    title: "Studio Zen",
-    meta: "Concept • Wellness",
-    badge: "Concept",
-    description: "Estetica premium e minimale: palette soft, tipografia pulita, layout modulare.",
+    description: "Contrasti netti e carattere forte, con applicazioni per studio e social.",
     slides: [
-      svgDataUri("Studio Zen", "Wellness • Calm & premium", "#a78bfa", "#0b1020"),
-      svgDataUri("Studio Zen", "Social kit & grid", "#a78bfa", "#090a12"),
+      svgDataUri("DinaInk", "Tattoo studio • Bold & authentic", "#ef4444", "#090a12"),
+      svgDataUri("DinaInk", "Layout & typography", "#ef4444", "#070a0f"),
     ],
   },
   {
-    id: "nordica-coffee",
-    title: "Nordica Coffee",
-    meta: "Concept • Coffee packaging",
-    badge: "Concept",
-    description: "Packaging con pattern modulare e look nordico: semplice, memorabile, scalabile.",
+    id: "magic-pizza",
+    title: "Magic Pizza",
+    meta: "Brand refresh • 2025",
+    badge: "Project",
+    description: "Linee guida visive e sistema promo: leggibile, coerente, facile da mantenere.",
     slides: [
-      svgDataUri("Nordica Coffee", "Packaging concept & pattern", "#60a5fa", "#091826"),
+      svgDataUri("Magic Pizza", "Promo system & visual guidelines", "#22c55e", "#07130e"),
     ],
   },
 ];
+
 
 
 // --- Helpers: generate quick SVG slides without extra files
@@ -268,10 +265,43 @@ window.addEventListener("keydown", (e) => {
 });
 
 
-// Background follows cursor (subtle)
-window.addEventListener("mousemove", (e) => {
-  const x = Math.round((e.clientX / window.innerWidth) * 100);
-  const y = Math.round((e.clientY / window.innerHeight) * 100);
-  document.documentElement.style.setProperty("--mx", x + "%");
-  document.documentElement.style.setProperty("--my", y + "%");
-});
+
+
+// --- Robust Info modal (in caso di modifiche future al markup)
+(function(){
+  const aboutModal = document.getElementById("aboutModal");
+  const btnAbout = document.getElementById("btnAbout");
+  const closeAbout = document.getElementById("closeAbout");
+  const aboutBackdrop = document.getElementById("aboutBackdrop");
+
+  if (btnAbout && aboutModal){
+    btnAbout.addEventListener("click", () => aboutModal.setAttribute("aria-hidden","false"));
+  }
+  if (closeAbout && aboutModal){
+    closeAbout.addEventListener("click", () => aboutModal.setAttribute("aria-hidden","true"));
+  }
+  if (aboutBackdrop && aboutModal){
+    aboutBackdrop.addEventListener("click", () => aboutModal.setAttribute("aria-hidden","true"));
+  }
+})();
+
+// Smooth cursor-follow background (lerp)
+(function(){
+  let tx = 50, ty = 50;
+  let cx = 50, cy = 50;
+
+  function onMove(e){
+    tx = (e.clientX / window.innerWidth) * 100;
+    ty = (e.clientY / window.innerHeight) * 100;
+  }
+  window.addEventListener("mousemove", onMove, {passive:true});
+
+  function tick(){
+    cx += (tx - cx) * 0.08;
+    cy += (ty - cy) * 0.08;
+    document.documentElement.style.setProperty("--mx", cx.toFixed(2) + "%");
+    document.documentElement.style.setProperty("--my", cy.toFixed(2) + "%");
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();

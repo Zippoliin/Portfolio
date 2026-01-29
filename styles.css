@@ -146,14 +146,14 @@ body{
   outline:none;
   transform: translateZ(0);
 }
-.folderTop{display:none}
-.folderTop::before{display:none}
-.folderBody{display:none}
-.folderLabel{display:none}
+.folderTop{}
+.folderTop::before{}
+.folderBody{}
+.folderLabel{}
 .folderTitle{font-weight:900; letter-spacing:-0.02em; font-size:20px; color: rgba(10,14,20,.88)}
 .folderSub{font-size:13px; color: rgba(10,14,20,.62); margin-top:3px; font-weight:600}
 
-.folderWrap.open .folderTop{display:none}
+.folderWrap.open .folderTop{}
 
 .popover{
   position:absolute;
@@ -382,18 +382,6 @@ body{overflow:auto}
   place-items:center;
   transition: transform .18s ease, filter .18s ease;
 }
-.folderImg{
-  width: 260px;
-  height: 260px;
-  object-fit:cover;
-  border-radius: 14px;
-  box-shadow: var(--shadowSoft);
-  border:1px solid rgba(255,255,255,.10);
-}
-.folderWrap.open .folder{
-  transform: translateY(-4px) scale(1.02);
-  filter: saturate(1.08) contrast(1.06);
-}
 
 /* Popover position tuned for square folder */
 .folderWrap{height: 420px}
@@ -402,3 +390,156 @@ body{overflow:auto}
 
 /* Inline link */
 .inlineLink{color:inherit; text-decoration:underline; text-underline-offset:3px}
+
+
+/* Apple-ish dynamic background (subtle aurora + cursor highlight) */
+:root{
+  --mx: 50%;
+  --my: 50%;
+  --aur1: 18%;
+  --aur2: 72%;
+  --aur3: 42%;
+}
+
+body{
+  background:
+    radial-gradient(900px 600px at var(--mx) var(--my), rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 62%),
+    radial-gradient(900px 700px at var(--aur1) 30%, rgba(59,130,246,.25) 0%, rgba(59,130,246,0) 60%),
+    radial-gradient(900px 700px at 82% var(--aur2), rgba(167,139,250,.20) 0%, rgba(167,139,250,0) 60%),
+    radial-gradient(900px 700px at 40% var(--aur3), rgba(34,197,94,.16) 0%, rgba(34,197,94,0) 60%),
+    radial-gradient(1200px 800px at 20% 30%, #0f1b33 0%, var(--bg0) 55%),
+    radial-gradient(900px 700px at 85% 15%, #13213b 0%, var(--bg0) 60%);
+  animation: aurora 14s ease-in-out infinite alternate;
+}
+
+@keyframes aurora{
+  0%{ --aur1: 16%; --aur2: 72%; --aur3: 40%; }
+  50%{ --aur1: 28%; --aur2: 64%; --aur3: 54%; }
+  100%{ --aur1: 22%; --aur2: 78%; --aur3: 46%; }
+}
+
+/* Header avatar hover card */
+.avatarWrap{position:relative; display:flex; align-items:center; gap:14px;}
+.meCard{
+  position:absolute;
+  left:0;
+  top:62px;
+  width: 320px;
+  padding:14px 14px 12px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(10,14,20,.72);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadowSoft);
+  opacity:0;
+  transform: translateY(8px);
+  pointer-events:none;
+  transition: opacity .16s ease, transform .16s ease;
+}
+.avatarWrap:hover .meCard{
+  opacity:1;
+  transform: translateY(0);
+  pointer-events:auto;
+}
+.meTitle{font-weight:950; letter-spacing:-.02em; font-size:14px}
+.meRole{color: rgba(229,231,235,.86); font-size:12px; margin-top:4px; opacity:.9}
+.meText{color: rgba(148,163,184,.95); font-size:12px; line-height:1.5; margin:10px 0 12px}
+.meCta{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:999px;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: rgba(229,231,235,.95);
+  font-size:12px;
+  font-weight:750;
+}
+
+/* Blue mac-style folder (no background image) */
+.folderWrap{position:relative; width:min(560px, 92vw); height:420px; display:grid; place-items:center;}
+
+.folder{
+  width: min(520px, 92vw);
+  height: 300px;
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  position:relative;
+  outline:none;
+  transform: translateZ(0);
+}
+
+.folderTop{
+  position:absolute;
+  left:0; right:0;
+  top:0;
+  height:108px;
+  background: linear-gradient(180deg, rgba(147,197,253,.98), rgba(96,165,250,.98));
+  border-radius: 26px 26px 18px 18px;
+  box-shadow: var(--shadowSoft);
+  border: 1px solid rgba(0,0,0,.10);
+  transform-origin: left bottom;
+  transform: perspective(900px) rotateX(0deg);
+  transition: transform .28s ease, filter .28s ease;
+}
+.folderTop::before{
+  content:"";
+  position:absolute;
+  left:26px; top:-26px;
+  width:170px; height:58px;
+  background: linear-gradient(180deg, rgba(147,197,253,.98), rgba(96,165,250,.98));
+  border-radius: 20px 20px 14px 14px;
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 10px 18px rgba(0,0,0,.18);
+}
+.folderBody{
+  position:absolute;
+  left:0; right:0;
+  top:62px;
+  height: 224px;
+  background: linear-gradient(180deg, rgba(96,165,250,.98), rgba(59,130,246,.98));
+  border-radius: 22px;
+  border: 1px solid rgba(0,0,0,.10);
+  box-shadow: 0 24px 70px rgba(0,0,0,.55);
+}
+.folderCut{
+  position:absolute;
+  left:0; right:0;
+  top:92px;
+  height: 24px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
+  opacity:.55;
+  pointer-events:none;
+}
+.folderLabel{
+  position:absolute;
+  bottom:18px; left:26px;
+  text-align:left;
+  mix-blend-mode:difference;
+}
+.folderTitle{font-weight:950; letter-spacing:-0.02em; font-size:18px; color: rgba(229,231,235,.95)}
+.folderSub{font-size:12px; color: rgba(229,231,235,.78); margin-top:3px; font-weight:650}
+
+.folderWrap.open .folderTop{
+  transform: perspective(900px) rotateX(-58deg) translateY(-4px);
+  filter: saturate(1.05) brightness(1.04);
+}
+
+/* Popover aligned to folder */
+.popover{top: 240px}
+.folderWrap.open .popover{
+  transform: translateX(-50%) translateY(-18px);
+}
+
+/* Seriousness: cards a touch cleaner */
+.card{background: rgba(15,23,42,.66)}
+.preview img{filter:saturate(1.05) contrast(1.04)}
+
+/* Make negative blend apply only to text elements (avoid odd effects) */
+.name, .role, .chip, .popoverTitle, .popoverSub, .cardTitle, .cardDesc, .mtName, .mtMeta{
+  mix-blend-mode:difference;
+}

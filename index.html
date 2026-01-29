@@ -13,7 +13,20 @@
 
   <header class="topbar">
     <div class="identity">
-      <div class="avatarSingle"><img src="assets/davide-portrait-1.jpeg" alt="Davide Di Mauro" /></div>
+      <div class="avatarWrap">
+        <div class="avatarSingle">
+          <img src="assets/davide-portrait-1.jpeg" alt="Davide Di Mauro" />
+        </div>
+        <div class="meCard" role="dialog" aria-label="Chi sono">
+          <div class="meTitle">Davide Di Mauro</div>
+          <div class="meRole">Brand Designer</div>
+          <p class="meText">
+            Creo identità visive pulite e riconoscibili per brand e attività locali.
+            Dal logo ai layout, fino a presentazioni e asset social coerenti.
+          </p>
+          <a class="meCta" href="mailto:davidedimauro.ve@gmail.com">Contattami</a>
+        </div>
+      </div>
       <div class="idText">
         <div class="name">Davide Di Mauro</div>
         <div class="role">Brand Designer</div>
@@ -30,8 +43,15 @@
   <main class="stage" aria-label="Portfolio">
     <section class="folderWrap" aria-label="Cartella portfolio">
       
+      
       <button id="folder" class="folder" type="button" aria-haspopup="dialog" aria-controls="folderPopover" aria-expanded="false">
-        <img class="folderImg" src="assets/folder-portfolio.png" alt="Portfolio" />
+        <div class="folderTop" aria-hidden="true"></div>
+        <div class="folderBody" aria-hidden="true"></div>
+        <div class="folderCut" aria-hidden="true"></div>
+        <div class="folderLabel" aria-hidden="true">
+          <div class="folderTitle">Portfolio</div>
+          <div class="folderSub">Brand identities</div>
+        </div>
       </button>
 <div id="folderPopover" class="popover" role="dialog" aria-label="Seleziona una brand identity">
         <div class="popoverHeader">
