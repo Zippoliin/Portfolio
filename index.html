@@ -34,7 +34,7 @@
     </div>
 
     <nav class="actions" aria-label="Azioni">
-      <button class="chip" id="btnAbout" type="button" aria-haspopup="dialog" aria-controls="aboutModal">Info<span class="tip" role="tooltip">Passa sulla cartella per aprirla. Clicca un progetto per vedere la presentazione. Usa ← → o le miniature per cambiare slide.</span></button>
+      <button class="chip" id="btnAbout" type="button" aria-haspopup="dialog" aria-controls="aboutModal">Info</button><div id="infoTip" class="infoTip" role="tooltip">Passa sulla cartella per aprirla. Clicca un progetto per vedere la presentazione. Usa ← → o le miniature per cambiare slide.</div>
       <a class="chip" href="assets/Davide-Di-Mauro-CV.pdf" id="btnDownload" download>CV</a>
       <a class="chip" href="mailto:davidedimauro.ve@gmail.com" title="Email (modifica con la tua)">Email</a>
     </nav>
@@ -77,12 +77,15 @@
         <div class="modalActions">
           <button class="chip" id="prevSlide" type="button" aria-label="Slide precedente">←</button>
           <button class="chip" id="nextSlide" type="button" aria-label="Slide successiva">→</button>
+          <button class="chip" id="zoomOut" type="button" aria-label="Zoom out">−</button>
+          <button class="chip" id="zoomReset" type="button" aria-label="Reset zoom">100%</button>
+          <button class="chip" id="zoomIn" type="button" aria-label="Zoom in">+</button>
           <button class="chip danger" id="closeModal" type="button" aria-label="Chiudi progetto">Chiudi</button>
         </div>
       </div>
 
       <div class="viewer">
-        <img id="slideImg" alt="" />
+        <div class="slideWrap" id="slideWrap"><img id="slideImg" alt="" /></div>
       </div>
 
       <div class="thumbs" id="thumbs" aria-label="Miniature"></div>

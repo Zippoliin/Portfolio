@@ -111,6 +111,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextSlideBtn = document.getElementById("nextSlide");
   const slideImg = document.getElementById("slideImg");
   const thumbsEl = document.getElementById("thumbs");
+  const slideWrap = document.getElementById("slideWrap");
+  const zoomInBtn = document.getElementById("zoomIn");
+  const zoomOutBtn = document.getElementById("zoomOut");
+  const zoomResetBtn = document.getElementById("zoomReset");
+
   const mTitle = document.getElementById("mTitle");
   const mMeta = document.getElementById("mMeta");
 
@@ -146,11 +151,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Project viewer
   let activeProject = null;
   let activeIndex = 0;
+  let zoom = 1;
+  let panX = 0;
+  let panY = 0;
+  let isPanning = false;
+  let panStartX = 0;
+  let panStartY = 0;
+
 
   function openProject(project) {
     if (!projectModal || !slideImg) return;
     activeProject = project;
     activeIndex = 0;
+    zoom = 1; panX = 0; panY = 0;
     projectModal.setAttribute("aria-hidden", "false");
     if (mTitle) mTitle.textContent = project.title;
     if (mMeta) mMeta.textContent = project.meta ?? "";
@@ -162,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     projectModal.setAttribute("aria-hidden", "true");
     activeProject = null;
     activeIndex = 0;
+    zoom = 1; panX = 0; panY = 0;
     if (thumbsEl) thumbsEl.innerHTML = "";
   }
 
@@ -170,6 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const src = activeProject.slides[activeIndex];
     slideImg.src = src;
     slideImg.alt = `Slide ${activeIndex + 1} — ${activeProject.title}`;
+    applyTransform();
 
     if (!thumbsEl) return;
     thumbsEl.innerHTML = "";
@@ -181,6 +196,18 @@ document.addEventListener("DOMContentLoaded", () => {
       b.addEventListener("click", () => { activeIndex = i; renderProject(); });
       thumbsEl.appendChild(b);
     });
+  }
+
+  function applyTransform(){
+    if(!slideImg) return;
+    const t = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+    slideImg.style.transform = t;
+    if(slideWrap){
+      slideWrap.classList.toggle("zoomed", zoom > 1.01);
+    }
+    if(zoomResetBtn){
+      zoomResetBtn.textContent = Math.round(zoom*100) + "%";
+    }
   }
 
   function nextSlide() {
@@ -198,6 +225,50 @@ document.addEventListener("DOMContentLoaded", () => {
   if (prevSlideBtn) prevSlideBtn.addEventListener("click", prevSlide);
   if (closeModal) closeModal.addEventListener("click", closeProject);
   if (modalBackdrop) modalBackdrop.addEventListener("click", closeProject);
+
+  // Zoom controls
+  function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+  function setZoom(n){
+    zoom = clamp(n, 1, 3.5);
+    if(zoom === 1){ panX = 0; panY = 0; }
+    applyTransform();
+  }
+  if(zoomInBtn) zoomInBtn.addEventListener("click", () => setZoom(zoom + 0.25));
+  if(zoomOutBtn) zoomOutBtn.addEventListener("click", () => setZoom(zoom - 0.25));
+  if(zoomResetBtn) zoomResetBtn.addEventListener("click", () => setZoom(1));
+
+  // Zoom with mouse wheel (trackpad friendly) while hovering the slide
+  if(slideWrap){
+    slideWrap.addEventListener("wheel", (e) => {
+      if(!activeProject) return;
+      e.preventDefault();
+      const delta = Math.sign(e.deltaY);
+      setZoom(zoom - delta * 0.15);
+    }, {passive:false});
+  }
+
+  // Pan when zoomed
+  if(slideWrap && slideImg){
+    slideWrap.addEventListener("mousedown", (e) => {
+      if(zoom <= 1.01) return;
+      isPanning = true;
+      panStartX = e.clientX - panX;
+      panStartY = e.clientY - panY;
+    });
+    window.addEventListener("mousemove", (e) => {
+      if(!isPanning) return;
+      panX = e.clientX - panStartX;
+      panY = e.clientY - panStartY;
+      applyTransform();
+    });
+    window.addEventListener("mouseup", () => { isPanning = false; });
+    // Double click to toggle zoom
+    slideWrap.addEventListener("dblclick", () => {
+      if(zoom <= 1.01) setZoom(2);
+      else setZoom(1);
+    });
+  }
+
 
   function renderGrid() {
     if (!grid) return;
