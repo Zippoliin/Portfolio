@@ -1,176 +1,213 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Francesco Biondi — Medicina Estetica</title>
-  <meta name="description" content="Sito esperienziale: prenota, scopri trattamenti e prodotti. Medicina estetica naturale e personalizzata." />
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <title>Studio Medico Estetico</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <a class="skip" href="#main">Vai al contenuto</a>
 
-  <header class="topbar" aria-label="Barra superiore">
-    <div class="topbar__actions">
-      <button class="chip" id="btnBook" type="button" aria-label="Prenota">Prenota</button>
-      <button class="iconbtn" id="btnInfo" type="button" aria-haspopup="dialog" aria-controls="infoDialog" aria-expanded="false" title="Info">
-        i
-      </button>
+<header class="topbar">
+  <div class="left"></div>
+  <div class="right">
+    <button class="btn" id="openBooking">Prenota</button>
+    <button class="btn ghost" id="openContacts">Contatti</button>
+  </div>
+</header>
+
+<main class="desk" aria-label="Scrivania studio medico">
+
+  <!-- POLAROID DOTTORE (clic: CHI SONO) -->
+  <button class="polaroid" id="openAbout" aria-label="Apri Chi sono">
+    <div class="photo" aria-hidden="true"></div>
+    <div class="caption">
+      <span class="name">Dott. Francesco Biondi</span>
+      <span class="role">Medico estetico</span>
+      <span class="hint">Clicca per info</span>
     </div>
-  </header>
+  </button>
 
-  <main id="main" class="stage" aria-label="Scena principale">
-    <!-- Desk scene -->
-    <section class="desk" aria-label="Scrivania">
-      <div class="desk__vignette" aria-hidden="true"></div>
+  <!-- PROPS VETTORIALI -->
+  <div class="prop prop-syringe" aria-hidden="true">
+    <svg viewBox="0 0 220 80" role="img">
+      <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 50 L95 35"/>
+        <rect x="95" y="20" width="80" height="30" rx="10"/>
+        <path d="M175 25 L205 10"/>
+        <path d="M175 45 L205 60"/>
+        <path d="M45 42 L55 58"/>
+        <path d="M55 58 L35 70"/>
+        <path d="M95 35 L85 55"/>
+        <path d="M110 24 L110 48"/>
+        <path d="M130 24 L130 48"/>
+        <path d="M150 24 L150 48"/>
+      </g>
+    </svg>
+  </div>
 
-      <!-- Props (purely decorative) -->
-      <div class="prop prop--polaroid" aria-hidden="true" title="Dott. Francesco Biondi"></div>
-      <div class="prop prop--gloves" aria-hidden="true" title="Guanti"></div>
-      <div class="prop prop--syringe" aria-hidden="true" title="Siringa"></div>
-      <div class="prop prop--bottles" aria-hidden="true" title="Boccette"></div>
-      <div class="prop prop--lipBefore" aria-hidden="true" title="Prima"></div>
-      <div class="prop prop--lipAfter" aria-hidden="true" title="Dopo"></div>
+  <div class="prop prop-gloves" aria-hidden="true">
+    <svg viewBox="0 0 220 140" role="img">
+      <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M50 25 C40 40, 35 55, 40 70 C45 85, 35 95, 35 110 C35 125, 55 135, 75 130 C95 125, 95 105, 95 95 C95 80, 110 65, 100 45 C92 30, 75 20, 50 25 Z"/>
+        <path d="M150 30 C140 45, 135 60, 140 75 C145 90, 135 100, 135 115 C135 130, 155 138, 175 132 C195 126, 195 108, 195 98 C195 83, 210 68, 200 48 C192 34, 175 25, 150 30 Z"/>
+      </g>
+    </svg>
+  </div>
 
-      <!-- Medical folder (vector) -->
-      <button id="folder" class="folder" type="button"
-              aria-label="Apri cartella navigazione"
-              aria-haspopup="true"
-              aria-expanded="false">
-        <span class="folder__shadow" aria-hidden="true"></span>
+  <div class="prop prop-bottles" aria-hidden="true">
+    <svg viewBox="0 0 220 170" role="img">
+      <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M55 30 h30 v20 c0 8-6 14-14 14h-2c-8 0-14-6-14-14z"/>
+        <path d="M45 64 h50 v90 c0 10-8 18-18 18H63c-10 0-18-8-18-18z"/>
+        <path d="M130 40 h28 v16 c0 7-6 13-13 13h-2c-7 0-13-6-13-13z"/>
+        <path d="M120 69 h48 v85 c0 11-9 20-20 20h-8c-11 0-20-9-20-20z"/>
+        <path d="M58 100 h24"/>
+        <path d="M132 110 h26"/>
+      </g>
+    </svg>
+  </div>
 
-        <svg class="folder__svg" viewBox="0 0 820 520" aria-hidden="true">
-          <!-- Base folder body -->
-          <defs>
-            <linearGradient id="baseGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#EFFEFF" stop-opacity="0.95" />
-              <stop offset="1" stop-color="#EFFEFF" stop-opacity="0.75" />
-            </linearGradient>
-            <linearGradient id="edgeGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#4166D4" stop-opacity="0.22" />
-              <stop offset="1" stop-color="#4166D4" stop-opacity="0.10" />
-            </linearGradient>
-            <linearGradient id="coverGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#EFFEFF" />
-              <stop offset="1" stop-color="#EFFEFF" stop-opacity="0.82" />
-            </linearGradient>
-          </defs>
-
-          <g class="folderSvg__base">
-            <!-- bottom card -->
-            <path d="M90 160 Q90 125 125 125 H330 Q360 125 372 140 L410 185 H695 Q730 185 730 220 V420 Q730 455 695 455 H125 Q90 455 90 420 Z"
-                  fill="url(#baseGrad)" />
-            <path d="M90 160 Q90 125 125 125 H330 Q360 125 372 140 L410 185 H695 Q730 185 730 220 V420 Q730 455 695 455 H125 Q90 455 90 420 Z"
-                  fill="url(#edgeGrad)" opacity="0.55" />
-            <path d="M125 125 H330 Q360 125 372 140 L410 185" fill="none" stroke="#4166D4" stroke-opacity="0.22" stroke-width="4" />
-          </g>
-
-          <!-- cover that opens -->
-          <g class="folderSvg__cover" transform-origin="410px 185px">
-            <path d="M110 185 H710 Q742 185 742 217 V420 Q742 460 702 460 H150 Q110 460 110 420 Z"
-                  fill="url(#coverGrad)" />
-            <path d="M110 185 H710 Q742 185 742 217 V420 Q742 460 702 460 H150 Q110 460 110 420 Z"
-                  fill="none" stroke="#4166D4" stroke-opacity="0.25" stroke-width="5" />
-
-            <!-- medical cross (bigger, thicker, bottom-right — no background) -->
-            <g transform="translate(665,405) scale(2.35)" opacity="0.95">
-              <path d="M-12 0 v22 h-22 v14 h22 v22 h14 v-22 h22 v-14 h-22 v-22 z" fill="#4166D4" />
-            </g>
-
-            <!-- Titles + hint INSIDE the folder (100x100 grid reference) -->
-            <text x="410" y="292" text-anchor="middle"
-                  font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
-                  font-size="18" letter-spacing="0.10em"
-                  fill="#4166D4" opacity="0.85">CARTELLA CLINICA</text>
-            <text x="410" y="318" text-anchor="middle"
-                  font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
-                  font-size="26" font-weight="700" letter-spacing="0.14em"
-                  fill="#4166D4" opacity="0.95">STUDIO</text>
-            <text x="410" y="368" text-anchor="middle"
-                  font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
-                  font-size="14" letter-spacing="0.06em"
-                  fill="#4166D4" opacity="0.70">PASSA / CLICCA PER APRIRE</text>
-          </g>
-        </svg>
-      </button>
-
-      <!-- Flyout menu (appears when folder opens) -->
-      <nav id="folderMenu" class="menu" aria-label="Sezioni del sito">
-        <button class="menu__item" data-target="home">
-          <span class="menu__k">01</span>
-          <span class="menu__t">Home</span>
-        </button>
-        <button class="menu__item" data-target="about">
-          <span class="menu__k">02</span>
-          <span class="menu__t">Chi sono</span>
-        </button>
-        <button class="menu__item" data-target="treatments">
-          <span class="menu__k">03</span>
-          <span class="menu__t">Trattamenti</span>
-        </button>
-        <button class="menu__item" data-target="products">
-          <span class="menu__k">04</span>
-          <span class="menu__t">Prodotti</span>
-        </button>
-        <button class="menu__item" data-target="book">
-          <span class="menu__k">05</span>
-          <span class="menu__t">Prenota</span>
-        </button>
-        <button class="menu__item" data-target="contact">
-          <span class="menu__k">06</span>
-          <span class="menu__t">Contatti</span>
-        </button>
-      </nav>
-
-      <!-- (Hero removed: focus on folder only) -->
-
-      <footer class="desk__footer" aria-label="Footer">
-        <span>© <span id="year"></span> Studio Medico • Tutti i diritti riservati</span>
-        <span class="sep" aria-hidden="true">•</span>
-        <a class="link" href="#" data-open="privacy">Privacy</a>
-        <span class="sep" aria-hidden="true">•</span>
-        <a class="link" href="#" data-open="terms">Termini</a>
-      </footer>
-    </section>
-
-    <!-- Overlay panels -->
-    <section class="overlay" id="overlay" aria-hidden="true">
-      <div class="overlay__backdrop" id="overlayBackdrop" aria-hidden="true"></div>
-
-      <article class="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
-        <div class="panel__top">
-          <div class="panel__crumb">Cartella / <span id="panelCrumb">Home</span></div>
-          <button class="iconbtn iconbtn--close" id="closePanel" type="button" aria-label="Chiudi">×</button>
-        </div>
-        <h2 id="panelTitle" class="panel__title">Home</h2>
-        <div class="panel__content" id="panelContent"></div>
-      </article>
-    </section>
-
-    <!-- Info dialog -->
-    <section class="dialog" id="infoDialog" role="dialog" aria-modal="true" aria-labelledby="infoTitle" aria-hidden="true">
-      <div class="dialog__backdrop" data-close="info" aria-hidden="true"></div>
-      <div class="dialog__box">
-        <div class="dialog__top">
-          <h3 id="infoTitle">Info rapida</h3>
-          <button class="iconbtn iconbtn--close" data-close="info" type="button" aria-label="Chiudi">×</button>
-        </div>
-        <p>
-          Questo è un prototipo “scrivania + cartella” in HTML/CSS/JS.
-          Puoi collegare il tasto <strong>Prenota</strong> a MioDottore, WhatsApp o un form.
-        </p>
-        <ul class="bullets">
-          <li>Desktop: hover/click per aprire la cartella.</li>
-          <li>Mobile: tap per aprire, menu in overlay.</li>
-          <li>Animazioni leggere e professionali.</li>
-        </ul>
-        <div class="dialog__actions">
-          <button class="btn btn--ghost" data-close="info" type="button">Ok</button>
-        </div>
+  <div class="prop prop-beforeafter" aria-hidden="true">
+    <div class="polas">
+      <div class="pola">
+        <div class="lip"></div>
+        <span>PRIMA</span>
       </div>
-    </section>
-  </main>
+      <div class="pola">
+        <div class="lip after"></div>
+        <span>DOPO</span>
+      </div>
+    </div>
+  </div>
 
-  <script src="app.js"></script>
+  <!-- CARTELLA CLINICA -->
+  <div class="folder" id="folder" aria-label="Cartella clinica" role="button" tabindex="0">
+    <div class="folder-face" id="folderFace">
+      <div class="folder-text">
+        <div class="title">CARTELLA CLINICA</div>
+        <div class="subtitle">STUDIO</div>
+        <div class="hint">PASSA / CLICCA PER APRIRE</div>
+      </div>
+      <div class="medical-cross" aria-hidden="true"></div>
+    </div>
+
+    <div class="folder-content" aria-label="Sezioni cartella">
+      <div class="folder-nav" role="tablist" aria-label="Sezioni">
+        <button class="nav-item" data-tab="treatments" role="tab" aria-selected="true">
+          <span class="nav-title">TRATTAMENTI</span>
+          <span class="nav-sub">Solo viso</span>
+        </button>
+        <button class="nav-item" data-tab="reviews" role="tab" aria-selected="false">
+          <span class="nav-title">RECENSIONI</span>
+          <span class="nav-sub">Esperienze reali</span>
+        </button>
+        <button class="nav-item" data-tab="products" role="tab" aria-selected="false">
+          <span class="nav-title">PRODOTTI</span>
+          <span class="nav-sub">Vetrina</span>
+        </button>
+      </div>
+
+      <div class="panels">
+        <section class="panel active" id="treatments" role="tabpanel">
+          <div class="panel-grid">
+            <article class="tile">
+              <div class="tile-icon" aria-hidden="true"></div>
+              <div class="tile-title">Filler labbra</div>
+              <div class="tile-desc">Risultato naturale e proporzionato</div>
+            </article>
+            <article class="tile">
+              <div class="tile-icon" aria-hidden="true"></div>
+              <div class="tile-title">Skin Booster</div>
+              <div class="tile-desc">Idratazione profonda, pelle luminosa</div>
+            </article>
+            <article class="tile">
+              <div class="tile-icon" aria-hidden="true"></div>
+              <div class="tile-title">Biorivitalizzazione</div>
+              <div class="tile-desc">Qualità della pelle, micro-rughe</div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel" id="reviews" role="tabpanel" hidden>
+          <div class="review-list">
+            <article class="review">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <div class="stars">★★★★★</div>
+                <div class="quote">"Mi sono sentita ascoltata. Risultato super naturale."</div>
+                <div class="tag">Trattamento: Labbra</div>
+              </div>
+              <div class="thumb" aria-hidden="true"></div>
+            </article>
+            <article class="review">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <div class="stars">★★★★★</div>
+                <div class="quote">"Studio pulitissimo, spiegazioni chiare, zero ansia."</div>
+                <div class="tag">Trattamento: Skin Booster</div>
+              </div>
+              <div class="thumb" aria-hidden="true"></div>
+            </article>
+            <article class="review">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <div class="stars">★★★★★</div>
+                <div class="quote">"Pelle più compatta e luminosa già dopo pochi giorni."</div>
+                <div class="tag">Trattamento: Biorivitalizzazione</div>
+              </div>
+              <div class="thumb" aria-hidden="true"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel" id="products" role="tabpanel" hidden>
+          <div class="product-grid">
+            <article class="product">
+              <div class="product-icon" aria-hidden="true"></div>
+              <div class="product-name">Siero Hyal</div>
+              <div class="product-meta">Idratazione quotidiana</div>
+            </article>
+            <article class="product">
+              <div class="product-icon" aria-hidden="true"></div>
+              <div class="product-name">Barrier Cream</div>
+              <div class="product-meta">Ripara e protegge</div>
+            </article>
+            <article class="product">
+              <div class="product-icon" aria-hidden="true"></div>
+              <div class="product-name">SPF 50+ Cloud</div>
+              <div class="product-meta">Protezione leggera</div>
+            </article>
+            <article class="product">
+              <div class="product-icon" aria-hidden="true"></div>
+              <div class="product-name">Calm Gel</div>
+              <div class="product-meta">Lenitivo post</div>
+            </article>
+            <article class="product">
+              <div class="product-icon" aria-hidden="true"></div>
+              <div class="product-name">Eye Repair</div>
+              <div class="product-meta">Contorno occhi</div>
+            </article>
+            <article class="product">
+              <div class="product-icon" aria-hidden="true"></div>
+              <div class="product-name">Clean Foam</div>
+              <div class="product-meta">Detersione soft</div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">© 2026 Studio Medico • Tutti i diritti riservati • <a href="#" class="link">Privacy</a> • <a href="#" class="link">Termini</a></footer>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Finestra informativa">
+  <div class="modal-content" id="modalContent" role="document"></div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
