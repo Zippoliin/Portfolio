@@ -25,7 +25,7 @@ body.preload .topbar,
 body.preload .desk{
   opacity:0;
   transform: translateY(-22px);
-  filter: blur(8px);
+  filter: blur(6px);
 }
 body.preload .desk__vignette{opacity:0;}
 .desk__blur{
@@ -35,19 +35,19 @@ body.preload .desk__vignette{opacity:0;}
   opacity:0;
   pointer-events:none;
   /* soft dim + blur behind the folder */
-  background: rgba(239,254,255,.08);
+  background: rgba(239,254,255,.10);
   -webkit-backdrop-filter: blur(0px);
   backdrop-filter: blur(0px);
   will-change: opacity, backdrop-filter;
   transition:
-    opacity 520ms cubic-bezier(.2,.9,.2,1),
-    -webkit-backdrop-filter 520ms cubic-bezier(.2,.9,.2,1),
-    backdrop-filter 520ms cubic-bezier(.2,.9,.2,1);
+    opacity 560ms cubic-bezier(.2,.9,.2,1),
+    -webkit-backdrop-filter 560ms cubic-bezier(.2,.9,.2,1),
+    backdrop-filter 560ms cubic-bezier(.2,.9,.2,1);
 }
 body.folder-open .desk__blur{
   opacity:1;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 
@@ -58,7 +58,7 @@ body.is-ready .desk{
   transform:none;
   filter:none;
   transition:
-    opacity 520ms cubic-bezier(.2,.9,.2,1),
+    opacity 560ms cubic-bezier(.2,.9,.2,1),
     transform 520ms cubic-bezier(.2,.9,.2,1),
     filter 520ms cubic-bezier(.2,.9,.2,1);
 }
@@ -264,19 +264,21 @@ body.folder-open .polaroid{
   visibility:visible;
   transform: scale(1);
   pointer-events:auto;
-  transition-delay: 120ms;
+  transition-delay: 200ms;
   transition-property: opacity, transform, background, visibility;
   /* visibility should switch immediately on open */
   transition-duration: 260ms, 260ms, 260ms, 0s;
   transition-timing-function: cubic-bezier(.2,.9,.2,1), cubic-bezier(.2,.9,.2,1), ease, linear;
-  transition-delay: 120ms, 120ms, 0ms, 0s;
+  transition-delay: 200ms, 200ms, 0ms, 0s;
 }
 @media (max-width: 780px){
   .folder__close{
+    position: fixed;
     left:50%;
     right:auto;
-    top:10px;
+    top:112px; /* below topbar */
     transform: translateX(-50%) scale(.92);
+    z-index: 60;
   }
   .folder.is-open .folder__close{
     transform: translateX(-50%) scale(1);
@@ -334,6 +336,16 @@ body.folder-open .polaroid{
   z-index:5;
 }
 .folder__content[hidden]{display:none;}
+
+@media (max-width: 780px){
+  /* Keep tabs stable when panel height changes */
+  .folder__content{
+    top: 250px;          /* anchored below topbar + polaroid area */
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 520px;
+  }
+}
 
 .folder__tabs{
   display:grid;
@@ -640,8 +652,8 @@ body.show-grid .devGrid{opacity:.35;}
     text-align:center;
     background: rgba(255,255,255,.97);
     border-color: rgba(65,102,212,.26);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
   .tab__title{color: var(--brand);}
   .tab__sub{color: var(--brand); opacity:.85;}

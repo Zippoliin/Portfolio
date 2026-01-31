@@ -67,9 +67,7 @@ function setFolderOpen(open){
   folderBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
   folderContent.hidden = !open;
 }
-
-folder.addEventListener('mouseenter', ()=>{ if(!pinnedOpen) setFolderOpen(true); });
-folder.addEventListener('mouseleave', ()=>{ if(!pinnedOpen) setFolderOpen(false); });
+ 
 folderBtn.addEventListener('click', ()=>{
   pinnedOpen = !pinnedOpen;
   setFolderOpen(pinnedOpen);
