@@ -33,24 +33,66 @@
       <div class="desk__vignette" aria-hidden="true"></div>
 
       <!-- Props (purely decorative) -->
-      <div class="prop prop--glove" aria-hidden="true"></div>
-      <div class="prop prop--mirror" aria-hidden="true"></div>
-      <div class="prop prop--bottle" aria-hidden="true"></div>
-      <div class="prop prop--pen" aria-hidden="true"></div>
-      <div class="prop prop--notepad" aria-hidden="true"></div>
-      <div class="prop prop--syringe" aria-hidden="true"></div>
+      <div class="prop prop--gloves" aria-hidden="true" title="Guanti"></div>
+      <div class="prop prop--syringe" aria-hidden="true" title="Siringa"></div>
+      <div class="prop prop--bottles" aria-hidden="true" title="Boccette"></div>
+      <div class="prop prop--lipBefore" aria-hidden="true" title="Prima"></div>
+      <div class="prop prop--lipAfter" aria-hidden="true" title="Dopo"></div>
 
-      <!-- Folder -->
+      <!-- Medical folder (vector) -->
       <button id="folder" class="folder" type="button"
               aria-label="Apri cartella navigazione"
               aria-haspopup="true"
               aria-expanded="false">
         <span class="folder__shadow" aria-hidden="true"></span>
-        <span class="folder__base" aria-hidden="true"></span>
-        <span class="folder__tab" aria-hidden="true"></span>
-        <span class="folder__cover" aria-hidden="true">
+
+        <svg class="folder__svg" viewBox="0 0 820 520" aria-hidden="true">
+          <!-- Base folder body -->
+          <defs>
+            <linearGradient id="baseGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#EFFEFF" stop-opacity="0.95" />
+              <stop offset="1" stop-color="#EFFEFF" stop-opacity="0.75" />
+            </linearGradient>
+            <linearGradient id="edgeGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#4166D4" stop-opacity="0.22" />
+              <stop offset="1" stop-color="#4166D4" stop-opacity="0.10" />
+            </linearGradient>
+            <linearGradient id="coverGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#EFFEFF" />
+              <stop offset="1" stop-color="#EFFEFF" stop-opacity="0.82" />
+            </linearGradient>
+          </defs>
+
+          <g class="folderSvg__base">
+            <!-- bottom card -->
+            <path d="M90 160 Q90 125 125 125 H330 Q360 125 372 140 L410 185 H695 Q730 185 730 220 V420 Q730 455 695 455 H125 Q90 455 90 420 Z"
+                  fill="url(#baseGrad)" />
+            <path d="M90 160 Q90 125 125 125 H330 Q360 125 372 140 L410 185 H695 Q730 185 730 220 V420 Q730 455 695 455 H125 Q90 455 90 420 Z"
+                  fill="url(#edgeGrad)" opacity="0.55" />
+            <path d="M125 125 H330 Q360 125 372 140 L410 185" fill="none" stroke="#4166D4" stroke-opacity="0.22" stroke-width="4" />
+          </g>
+
+          <!-- cover that opens -->
+          <g class="folderSvg__cover" transform-origin="410px 185px">
+            <path d="M110 185 H710 Q742 185 742 217 V420 Q742 460 702 460 H150 Q110 460 110 420 Z"
+                  fill="url(#coverGrad)" />
+            <path d="M110 185 H710 Q742 185 742 217 V420 Q742 460 702 460 H150 Q110 460 110 420 Z"
+                  fill="none" stroke="#4166D4" stroke-opacity="0.25" stroke-width="5" />
+
+            <!-- label badge -->
+            <rect x="280" y="250" width="260" height="72" rx="18" fill="#4166D4" fill-opacity="0.10" stroke="#4166D4" stroke-opacity="0.22" />
+
+            <!-- medical cross -->
+            <g transform="translate(390,265)" opacity="0.9">
+              <rect x="-20" y="0" width="60" height="60" rx="14" fill="#4166D4" fill-opacity="0.12" stroke="#4166D4" stroke-opacity="0.28" />
+              <path d="M10 12 v14 h-14 v10 h14 v14 h10 v-14 h14 v-10 h-14 v-14 z" fill="#4166D4" />
+            </g>
+          </g>
+        </svg>
+
+        <span class="folder__ui" aria-hidden="true">
           <span class="folder__title">
-            <span class="folder__titleSmall">Portfolio</span>
+            <span class="folder__titleSmall">Cartella Clinica</span>
             <span class="folder__titleBig">Studio</span>
           </span>
           <span class="folder__hint">Passa / clicca per aprire</span>
