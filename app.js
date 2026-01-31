@@ -62,6 +62,7 @@ let pinnedOpen = false;
 
 function setFolderOpen(open){
   folder.classList.toggle('is-open', open);
+  document.body.classList.toggle('folder-open', open);
   folderBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
   folderContent.hidden = !open;
 }

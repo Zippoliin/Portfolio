@@ -513,12 +513,21 @@ body.show-grid .devGrid{opacity:.35;}
   /* Keep folder perfectly centered on mobile as well */
   .folder{top:50%; z-index:6;}
   .folder__content{width:90%;}
-  /* When the folder opens, keep the 3 choices visually above the polaroid */
-  .folder__content{top:46%;}
-  .folder.is-open .folder__content{top:42%;}
+  /* Mobile: keep choices readable (avoid overlapping the polaroid) */
+  .folder__content{top:60%;}
+  .folder.is-open .folder__content{top:60%;}
+  body.folder-open .polaroid{opacity:.32; filter: blur(1px);}
   .cardGrid{grid-template-columns: 1fr 1fr;}
   .folder__tabs{grid-template-columns: 1fr; gap:10px;}
-  .tab{text-align:center;}
+  .tab{
+    text-align:center;
+    background: rgba(255,255,255,.97);
+    border-color: rgba(65,102,212,.26);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .tab__title{color: var(--brand);}
+  .tab__sub{color: var(--brand); opacity:.85;}
 }
 @media (prefers-reduced-motion: reduce){
   body.preload .topbar,
