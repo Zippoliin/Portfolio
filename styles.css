@@ -97,8 +97,9 @@ body.is-ready .desk__vignette{
 /* Polaroid (bigger, top-left) */
 .polaroid{
   position:absolute;
-  top:26px;
-  left:34px;
+  /* aligned to the internal 100x100 layout grid (not visible to users) */
+  top:3%;
+  left:4%;
   width:360px;
   background:var(--white);
   border:none;
@@ -150,7 +151,8 @@ body.is-ready .desk__vignette{
   left:50%;
   transform: translate(-50%,-50%);
   width:min(760px, 92vw);
-  z-index:2;
+  /* keep folder above props/polaroid so the open state never hides content */
+  z-index:6;
 }
 .folder__btn{
   width:100%;
@@ -492,8 +494,13 @@ body.show-grid .devGrid{opacity:.35;}
 }
 @media (max-width: 780px){
   .desk{min-height:900px;}
-  /* Polaroid: smaller on mobile (~ -50px) */
-  .polaroid{left:14px; top:14px; width:230px;}
+  /* Polaroid: smaller and grid-aligned on mobile */
+  .polaroid{
+    top:3%;
+    left:50%;
+    width:230px; /* ~ -50px vs desktop */
+    transform: translateX(-50%) rotate(-1.2deg);
+  }
   .polaroid__photo{height:190px;}
 
   /* Props: re-balanced for phone layouts */
@@ -503,8 +510,8 @@ body.show-grid .devGrid{opacity:.35;}
   .prop--bottles{bottom:26px; right:12px; width:170px;}
   .prop--gloves{bottom:24px; left:12px; width:170px;}
 
-  /* Keep folder interaction above other elements */
-  .folder{top:62%; z-index:6;}
+  /* Keep folder perfectly centered on mobile as well */
+  .folder{top:50%; z-index:6;}
   .folder__content{width:90%;}
   /* When the folder opens, keep the 3 choices visually above the polaroid */
   .folder__content{top:46%;}
