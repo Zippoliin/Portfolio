@@ -45,6 +45,22 @@ body.is-ready .desk__vignette{
 }
 
 /* Topbar */
+
+/* Desktop: revert to the earlier, calmer opening (fade only) */
+@media (min-width: 781px){
+  body.preload .topbar,
+  body.preload .desk{
+    opacity:0;
+    transform:none;
+    filter:none;
+  }
+  body.is-ready .topbar,
+  body.is-ready .desk{
+    transition:
+      opacity 520ms ease;
+  }
+}
+
 .topbar{
   height:64px;
   display:flex;
@@ -100,7 +116,7 @@ body.is-ready .desk__vignette{
   /* aligned to the internal 100x100 layout grid (not visible to users) */
   top:3%;
   left:4%;
-  width:320px;
+  width:280px;
   background:var(--white);
   border:none;
   text-align:left;
@@ -111,8 +127,13 @@ body.is-ready .desk__vignette{
   transform: rotate(-1.2deg);
   z-index:3;
 }
+
+/* When the folder opens (desktop), slightly reduce the polaroid’s visual dominance */
+body.folder-open .polaroid{
+  transform: rotate(-1.2deg) scale(.92) translateY(-10px);
+}
 .polaroid__photo{
-  height:260px;
+  height:150px;
   border-radius:10px;
   background-image:url("assets/doctor.jpg");
   background-size:cover;
@@ -123,12 +144,6 @@ body.is-ready .desk__vignette{
 .polaroid__name{font-weight:900; letter-spacing:.2px;}
 .polaroid__role{font-size:13px; opacity:.9;}
 .polaroid__hint{font-size:12px; opacity:.7; margin-top:6px;}
-
-/* Desktop: when folder opens, lift the polaroid a bit to keep the folder tabs clear */
-body.folder-open .polaroid{
-  transform: rotate(-1.2deg) translateY(-18px);
-}
-
 
 /* Props */
 .prop{
@@ -244,7 +259,7 @@ body.folder-open .polaroid{
 }
 .tab{
   border-radius:16px;
-  background: rgba(255,255,255,.85);
+  background: rgba(255,255,255,.88);
   border:1px solid rgba(65,102,212,.18);
   padding:16px 16px 14px;
   cursor:pointer;
@@ -257,6 +272,9 @@ body.folder-open .polaroid{
 .folder.is-open .tab{
   transform: translateY(0) scale(1);
   opacity:1;
+  background: rgba(255,255,255,.97);
+  border-color: rgba(65,102,212,.24);
+  box-shadow: 0 16px 36px rgba(0,0,0,.14);
 }
 .tab:nth-child(2){transition-delay:40ms}
 .tab:nth-child(3){transition-delay:80ms}
@@ -272,7 +290,7 @@ body.folder-open .polaroid{
   margin-top:6px;
   font-weight:800;
   font-size:12px;
-  opacity:.78;
+  opacity:.88;
 }
 .tab.is-active{
   background: rgba(65,102,212,.10);
@@ -493,8 +511,8 @@ body.show-grid .devGrid{opacity:.35;}
 
 /* Responsive */
 @media (max-width: 980px){
-  .polaroid{width:280px;}
-  .polaroid__photo{height:230px;}
+  .polaroid{width:320px;}
+  .polaroid__photo{height:260px;}
   .prop--beforeAfter{right:40px;}
   .prop--syringe{right:40px;}
 }
@@ -504,10 +522,10 @@ body.show-grid .devGrid{opacity:.35;}
   .polaroid{
     top:3%;
     left:50%;
-    width:170px; /* ~ -150px vs desktop */
+    width:180px; /* ~ -150px vs old desktop */
     transform: translateX(-50%) rotate(-1.2deg);
   }
-  .polaroid__photo{height:140px;}
+  .polaroid__photo{height:80px;}
 
   /* Props: re-balanced for phone layouts */
   .prop--syringe{top:92px; right:10px; width:190px; transform: rotate(-16deg);}
@@ -517,15 +535,15 @@ body.show-grid .devGrid{opacity:.35;}
   .prop--gloves{bottom:24px; left:12px; width:170px;}
 
   /* Keep folder perfectly centered on mobile as well */
-  .folder{top:50%; z-index:6;}
+  .folder{top: calc(50% - 60px); z-index:6;}
   .folder__content{width:90%;}
   /* Mobile: keep choices centered; when the folder opens we move the polaroid up instead */
-  .folder__content{top:56%;}
-  .folder.is-open .folder__content{top:56%;}
+  .folder__content{top:54%;}
+  .folder.is-open .folder__content{top:54%;}
 
   /* On open, lift the polaroid slightly so it never fights the tabs */
   body.folder-open .polaroid{
-    top:1.2%;
+    top:0.8%;
     transform: translateX(-50%) rotate(-1.2deg) translateY(-18px);
   }
   .cardGrid{grid-template-columns: 1fr 1fr;}
