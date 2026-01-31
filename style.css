@@ -1,0 +1,104 @@
+
+:root {
+  --primary:#4166D4;
+  --secondary:#EFFEFF;
+}
+
+body {
+  margin:0;
+  font-family: system-ui, sans-serif;
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+.topbar {
+  display:flex;
+  gap:10px;
+  padding:16px;
+}
+
+.prenota, .info {
+  border-radius:999px;
+  border:1px solid var(--primary);
+  background:transparent;
+  padding:8px 14px;
+  color:var(--primary);
+}
+
+.desk {
+  position:relative;
+  height:80vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.folder {
+  position:relative;
+  width:420px;
+  height:260px;
+  border-radius:18px;
+  background:linear-gradient(#ffffff,#f3f7ff);
+  box-shadow:0 30px 60px rgba(0,0,0,.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.folder-label {
+  text-align:center;
+}
+
+.folder-label h1 {
+  margin:0;
+  font-size:18px;
+  letter-spacing:2px;
+}
+
+.folder-label h2 {
+  margin:4px 0;
+  font-size:16px;
+}
+
+.folder-label p {
+  font-size:12px;
+  opacity:.7;
+}
+
+.cross {
+  position:absolute;
+  bottom:18px;
+  right:18px;
+  font-size:48px;
+  color:var(--primary);
+}
+
+.polaroid {
+  position:absolute;
+  top:40px;
+  right:40px;
+  width:140px;
+  background:white;
+  padding:10px;
+  box-shadow:0 12px 30px rgba(0,0,0,.2);
+  transform:rotate(-4deg);
+}
+
+.polaroid img {
+  width:100%;
+  display:block;
+}
+
+.polaroid span {
+  display:block;
+  margin-top:6px;
+  font-size:12px;
+  text-align:center;
+}
+
+footer {
+  text-align:center;
+  padding:20px;
+  font-size:12px;
+  opacity:.6;
+}
