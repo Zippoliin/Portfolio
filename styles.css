@@ -185,6 +185,35 @@ body.show-grid .desk::after{
   pointer-events:none;
 }
 
+/* Doctor polaroid (trust element) */
+.prop--polaroid{
+  width: clamp(200px, 18vw, 320px);
+  height: clamp(240px, 22vw, 380px);
+  left: clamp(18px, 5vw, 70px);
+  top: clamp(90px, 10vh, 150px);
+  transform: rotate(-4deg);
+  background-image: none; /* image set via ::before for proper crop */
+  filter: drop-shadow(0 20px 28px var(--shadow));
+}
+.prop--polaroid::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(239,254,255,.55));
+  border: 1px solid rgba(65,102,212,.18);
+}
+.prop--polaroid::after{
+  content:"";
+  position:absolute;
+  left: 12px; right: 12px; top: 12px; bottom: 54px;
+  border-radius: 14px;
+  background-image: url('assets/doctor.jpg');
+  background-size: cover;
+  background-position: center 25%;
+  box-shadow: inset 0 0 0 1px rgba(65,102,212,.10);
+}
+
 /* Medical props (SVG) */
 .prop--gloves{
   width: 170px; height: 140px;

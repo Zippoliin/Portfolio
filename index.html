@@ -1,35 +1,176 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<title>Studio Medico Estetico</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Francesco Biondi — Medicina Estetica</title>
+  <meta name="description" content="Sito esperienziale: prenota, scopri trattamenti e prodotti. Medicina estetica naturale e personalizzata." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<header class="topbar">
-  <button class="prenota">Prenota</button>
-  <button class="info">i</button>
-</header>
+  <a class="skip" href="#main">Vai al contenuto</a>
 
-<main class="desk">
-  <div class="polaroid">
-    <img src="doctor.jpg" alt="Medico Estetico">
-    <span>Dr. Francesco Biondi</span>
-  </div>
-
-  <div class="folder">
-    <div class="folder-label">
-      <h1>CARTELLA CLINICA</h1>
-      <h2>STUDIO</h2>
-      <p>PASSA / CLICCA PER APRIRE</p>
+  <header class="topbar" aria-label="Barra superiore">
+    <div class="topbar__actions">
+      <button class="chip" id="btnBook" type="button" aria-label="Prenota">Prenota</button>
+      <button class="iconbtn" id="btnInfo" type="button" aria-haspopup="dialog" aria-controls="infoDialog" aria-expanded="false" title="Info">
+        i
+      </button>
     </div>
-    <div class="cross">+</div>
-  </div>
-</main>
+  </header>
 
-<footer>
-© 2026 Studio Medico · Privacy · Termini
-</footer>
+  <main id="main" class="stage" aria-label="Scena principale">
+    <!-- Desk scene -->
+    <section class="desk" aria-label="Scrivania">
+      <div class="desk__vignette" aria-hidden="true"></div>
+
+      <!-- Props (purely decorative) -->
+      <div class="prop prop--polaroid" aria-hidden="true" title="Dott. Francesco Biondi"></div>
+      <div class="prop prop--gloves" aria-hidden="true" title="Guanti"></div>
+      <div class="prop prop--syringe" aria-hidden="true" title="Siringa"></div>
+      <div class="prop prop--bottles" aria-hidden="true" title="Boccette"></div>
+      <div class="prop prop--lipBefore" aria-hidden="true" title="Prima"></div>
+      <div class="prop prop--lipAfter" aria-hidden="true" title="Dopo"></div>
+
+      <!-- Medical folder (vector) -->
+      <button id="folder" class="folder" type="button"
+              aria-label="Apri cartella navigazione"
+              aria-haspopup="true"
+              aria-expanded="false">
+        <span class="folder__shadow" aria-hidden="true"></span>
+
+        <svg class="folder__svg" viewBox="0 0 820 520" aria-hidden="true">
+          <!-- Base folder body -->
+          <defs>
+            <linearGradient id="baseGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#EFFEFF" stop-opacity="0.95" />
+              <stop offset="1" stop-color="#EFFEFF" stop-opacity="0.75" />
+            </linearGradient>
+            <linearGradient id="edgeGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#4166D4" stop-opacity="0.22" />
+              <stop offset="1" stop-color="#4166D4" stop-opacity="0.10" />
+            </linearGradient>
+            <linearGradient id="coverGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#EFFEFF" />
+              <stop offset="1" stop-color="#EFFEFF" stop-opacity="0.82" />
+            </linearGradient>
+          </defs>
+
+          <g class="folderSvg__base">
+            <!-- bottom card -->
+            <path d="M90 160 Q90 125 125 125 H330 Q360 125 372 140 L410 185 H695 Q730 185 730 220 V420 Q730 455 695 455 H125 Q90 455 90 420 Z"
+                  fill="url(#baseGrad)" />
+            <path d="M90 160 Q90 125 125 125 H330 Q360 125 372 140 L410 185 H695 Q730 185 730 220 V420 Q730 455 695 455 H125 Q90 455 90 420 Z"
+                  fill="url(#edgeGrad)" opacity="0.55" />
+            <path d="M125 125 H330 Q360 125 372 140 L410 185" fill="none" stroke="#4166D4" stroke-opacity="0.22" stroke-width="4" />
+          </g>
+
+          <!-- cover that opens -->
+          <g class="folderSvg__cover" transform-origin="410px 185px">
+            <path d="M110 185 H710 Q742 185 742 217 V420 Q742 460 702 460 H150 Q110 460 110 420 Z"
+                  fill="url(#coverGrad)" />
+            <path d="M110 185 H710 Q742 185 742 217 V420 Q742 460 702 460 H150 Q110 460 110 420 Z"
+                  fill="none" stroke="#4166D4" stroke-opacity="0.25" stroke-width="5" />
+
+            <!-- medical cross (bigger, thicker, bottom-right — no background) -->
+            <g transform="translate(665,405) scale(2.35)" opacity="0.95">
+              <path d="M-12 0 v22 h-22 v14 h22 v22 h14 v-22 h22 v-14 h-22 v-22 z" fill="#4166D4" />
+            </g>
+
+            <!-- Titles + hint INSIDE the folder (100x100 grid reference) -->
+            <text x="410" y="292" text-anchor="middle"
+                  font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+                  font-size="18" letter-spacing="0.10em"
+                  fill="#4166D4" opacity="0.85">CARTELLA CLINICA</text>
+            <text x="410" y="318" text-anchor="middle"
+                  font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+                  font-size="26" font-weight="700" letter-spacing="0.14em"
+                  fill="#4166D4" opacity="0.95">STUDIO</text>
+            <text x="410" y="368" text-anchor="middle"
+                  font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+                  font-size="14" letter-spacing="0.06em"
+                  fill="#4166D4" opacity="0.70">PASSA / CLICCA PER APRIRE</text>
+          </g>
+        </svg>
+      </button>
+
+      <!-- Flyout menu (appears when folder opens) -->
+      <nav id="folderMenu" class="menu" aria-label="Sezioni del sito">
+        <button class="menu__item" data-target="home">
+          <span class="menu__k">01</span>
+          <span class="menu__t">Home</span>
+        </button>
+        <button class="menu__item" data-target="about">
+          <span class="menu__k">02</span>
+          <span class="menu__t">Chi sono</span>
+        </button>
+        <button class="menu__item" data-target="treatments">
+          <span class="menu__k">03</span>
+          <span class="menu__t">Trattamenti</span>
+        </button>
+        <button class="menu__item" data-target="products">
+          <span class="menu__k">04</span>
+          <span class="menu__t">Prodotti</span>
+        </button>
+        <button class="menu__item" data-target="book">
+          <span class="menu__k">05</span>
+          <span class="menu__t">Prenota</span>
+        </button>
+        <button class="menu__item" data-target="contact">
+          <span class="menu__k">06</span>
+          <span class="menu__t">Contatti</span>
+        </button>
+      </nav>
+
+      <!-- (Hero removed: focus on folder only) -->
+
+      <footer class="desk__footer" aria-label="Footer">
+        <span>© <span id="year"></span> Studio Medico • Tutti i diritti riservati</span>
+        <span class="sep" aria-hidden="true">•</span>
+        <a class="link" href="#" data-open="privacy">Privacy</a>
+        <span class="sep" aria-hidden="true">•</span>
+        <a class="link" href="#" data-open="terms">Termini</a>
+      </footer>
+    </section>
+
+    <!-- Overlay panels -->
+    <section class="overlay" id="overlay" aria-hidden="true">
+      <div class="overlay__backdrop" id="overlayBackdrop" aria-hidden="true"></div>
+
+      <article class="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+        <div class="panel__top">
+          <div class="panel__crumb">Cartella / <span id="panelCrumb">Home</span></div>
+          <button class="iconbtn iconbtn--close" id="closePanel" type="button" aria-label="Chiudi">×</button>
+        </div>
+        <h2 id="panelTitle" class="panel__title">Home</h2>
+        <div class="panel__content" id="panelContent"></div>
+      </article>
+    </section>
+
+    <!-- Info dialog -->
+    <section class="dialog" id="infoDialog" role="dialog" aria-modal="true" aria-labelledby="infoTitle" aria-hidden="true">
+      <div class="dialog__backdrop" data-close="info" aria-hidden="true"></div>
+      <div class="dialog__box">
+        <div class="dialog__top">
+          <h3 id="infoTitle">Info rapida</h3>
+          <button class="iconbtn iconbtn--close" data-close="info" type="button" aria-label="Chiudi">×</button>
+        </div>
+        <p>
+          Questo è un prototipo “scrivania + cartella” in HTML/CSS/JS.
+          Puoi collegare il tasto <strong>Prenota</strong> a MioDottore, WhatsApp o un form.
+        </p>
+        <ul class="bullets">
+          <li>Desktop: hover/click per aprire la cartella.</li>
+          <li>Mobile: tap per aprire, menu in overlay.</li>
+          <li>Animazioni leggere e professionali.</li>
+        </ul>
+        <div class="dialog__actions">
+          <button class="btn btn--ghost" data-close="info" type="button">Ok</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
