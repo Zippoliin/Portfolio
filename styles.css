@@ -17,6 +17,38 @@ body{
   overflow-x:hidden;
 }
 
+/* Page intro (adds motion without feeling "game-y") */
+body:not(.is-loaded) .topbar,
+body:not(.is-loaded) .polaroid,
+body:not(.is-loaded) .prop,
+body:not(.is-loaded) .folder,
+body:not(.is-loaded) .footer{
+  opacity:0;
+  transform: translateY(-18px) scale(.99);
+}
+body:not(.is-loaded) .desk__vignette{opacity:0;}
+
+body.is-loaded .topbar,
+body.is-loaded .polaroid,
+body.is-loaded .prop,
+body.is-loaded .folder,
+body.is-loaded .footer{
+  opacity:1;
+  transform: translateY(0) scale(1);
+  transition: opacity 700ms cubic-bezier(.2,.9,.2,1), transform 700ms cubic-bezier(.2,.9,.2,1);
+}
+body.is-loaded .desk__vignette{
+  opacity:.58;
+  transition: opacity 900ms ease;
+}
+
+/* Stagger (pure CSS, no JS needed) */
+body.is-loaded .topbar{transition-delay:40ms;}
+body.is-loaded .folder{transition-delay:90ms;}
+body.is-loaded .prop{transition-delay:130ms;}
+body.is-loaded .polaroid{transition-delay:170ms;}
+body.is-loaded .footer{transition-delay:220ms;}
+
 /* Topbar */
 .topbar{
   height:64px;
@@ -465,15 +497,53 @@ body.show-grid .devGrid{opacity:.35;}
 }
 @media (max-width: 780px){
   .desk{min-height:900px;}
-  .polaroid{left:18px; top:18px; width:280px;}
-  .polaroid__photo{height:240px;}
-  .prop--beforeAfter{top:210px; right:18px; gap:10px;}
-  .pola{width:118px;}
-  .folder{top:58%;}
+  .polaroid{left:14px; top:14px; width:260px; transform: rotate(-.9deg);}
+  .polaroid__photo{height:210px;}
+
+  /* Keep the before/after visible but tighter on mobile */
+  .prop--beforeAfter{top:176px; right:14px; gap:10px; transform: rotate(2deg);}
+  .pola{width:112px;}
+
+  /* Reposition vectors for phone so they don't feel random */
+  .prop--syringe{top:98px; right:18px; width:190px; transform: rotate(-16deg); opacity:.92;}
+  .prop--bottles{bottom:86px; right:18px; width:190px; transform: rotate(-6deg);}
+  .prop--gloves{bottom:74px; left:18px; width:200px; transform: rotate(8deg);}
+
+  /* Place folder so open tabs never collide with the polaroid */
+  .folder{top:64%;}
+  .folder.is-open{top:60%;}
   .folder__content{width:90%;}
+  .folder.is-open .folder__content{top:50%;}
   .cardGrid{grid-template-columns: 1fr 1fr;}
   .folder__tabs{grid-template-columns: 1fr; gap:10px;}
   .tab{text-align:center;}
+}
+
+/* Extra-small phones */
+@media (max-width: 520px){
+  .topbar{padding:0 14px; height:60px;}
+  .desk{height:calc(100vh - 60px); min-height:860px;}
+
+  .polaroid{width:220px;}
+  .polaroid__photo{height:170px;}
+  .polaroid__name{font-size:14px;}
+  .polaroid__role{font-size:12px;}
+
+  .prop--beforeAfter{top:160px; right:12px;}
+  .pola{width:98px;}
+
+  .prop--syringe{top:86px; right:-6px; width:170px;}
+  .prop--bottles{bottom:78px; right:10px; width:170px;}
+  .prop--gloves{bottom:64px; left:10px; width:180px;}
+
+  /* Make sure the folder content has room and stays readable */
+  .folder{top:68%; width:94vw;}
+  .folder.is-open{top:62%;}
+  .folder__content{top:58%;}
+  .folder.is-open .folder__content{top:50%;}
+
+  .folder__tabs{margin-bottom:12px;}
+  .tab{padding:18px 16px 16px;}
 }
 @media (prefers-reduced-motion: reduce){
   .folderSvg__cover{transition:none;}

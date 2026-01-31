@@ -3,6 +3,24 @@
 const qs = (s, el=document)=>el.querySelector(s);
 const qsa = (s, el=document)=>Array.from(el.querySelectorAll(s));
 
+// Intro animation – subtle slide/glow on first load (desktop + mobile)
+// Respects prefers-reduced-motion.
+(() => {
+  try {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      document.body.classList.add('is-loaded');
+      return;
+    }
+    // Start from initial (CSS) state, then reveal after first paint
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => document.body.classList.add('is-loaded'));
+    });
+  } catch {
+    document.body.classList.add('is-loaded');
+  }
+})();
+
 // Dev grid (100x100) toggle via ?grid=1
 try{
   const sp = new URLSearchParams(location.search);
