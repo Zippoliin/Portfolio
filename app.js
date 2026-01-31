@@ -10,6 +10,8 @@
   const closePanel = document.getElementById('closePanel');
   const ctaOpen = document.getElementById('ctaOpen');
   const btnBook = document.getElementById('btnBook');
+  const btnContact = document.getElementById('btnContact');
+  const btnAbout = document.getElementById('btnAbout');
   const btnInfo = document.getElementById('btnInfo');
   const infoDialog = document.getElementById('infoDialog');
   const year = document.getElementById('year');
@@ -199,7 +201,7 @@
   // --- Panel overlay ---
   let lastFocused = null;
   const showPanel = (key) => {
-    const page = pages[key] || pages.home;
+    const page = pages[key] || pages.treatments;
     panelTitle.textContent = page.title;
     panelCrumb.textContent = page.crumb;
     panelContent.innerHTML = page.html;
@@ -248,6 +250,8 @@
 
   // Topbar buttons
   btnBook.addEventListener('click', () => showPanel('book'));
+  btnContact && btnContact.addEventListener('click', () => showPanel('contact'));
+  btnAbout && btnAbout.addEventListener('click', () => showPanel('about'));
 
   // --- Info dialog ---
   const showInfo = () => {
