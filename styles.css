@@ -28,6 +28,18 @@ body.preload .desk{
   filter: blur(8px);
 }
 body.preload .desk__vignette{opacity:0;}
+.desk__blur{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  opacity:0;
+  pointer-events:none;
+  background: rgba(239,254,255,.22);
+  backdrop-filter: blur(12px) saturate(1.05);
+  transition: opacity 260ms ease;
+}
+body.folder-open .desk__blur{ opacity:1; }
+
 
 body.is-ready .topbar,
 body.is-ready .desk{
@@ -141,7 +153,7 @@ body.folder-open .polaroid{
   background-image:url("assets/doctor.jpg");
   background-size:cover;
   /* Lift framing a bit so the head isn't cropped */
-  background-position: 50% 8%;
+  background-position:  52% 24%;
   background-color:rgba(65,102,212,.10);
 }
 .polaroid__caption{padding-top:10px; display:flex; flex-direction:column; gap:2px;}
@@ -532,7 +544,7 @@ body.show-grid .devGrid{opacity:.35;}
     width:180px; /* ~ -150px vs old desktop */
     transform: translateX(-50%) rotate(-1.2deg);
   }
-  .polaroid__photo{width:104px; margin:0 auto 10px; background-position:50% 0%;}
+  .polaroid__photo{width:104px; margin:0 auto 10px; background-position: 52% 24%;}
 
   /* Props: re-balanced for phone layouts */
   .prop--syringe{top:92px; right:10px; width:190px; transform: rotate(-16deg);}
@@ -576,4 +588,11 @@ body.show-grid .devGrid{opacity:.35;}
   .tab{transition:none;}
   .card{transition:none;}
   .detail__card{transition:none;}
+}
+
+/* Polaroid photo framing tweak for mobile */
+@media (max-width: 520px){
+  .polaroid__photo{
+    background-position: 52% 28%;
+  }
 }
