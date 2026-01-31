@@ -34,11 +34,11 @@ body.preload .desk__vignette{opacity:0;}
   z-index:5;
   opacity:0;
   pointer-events:none;
-  /* lighter + cleaner */
-  background: rgba(239,254,255,.18);
-  --blurAmt: 0px;
-  -webkit-backdrop-filter: blur(var(--blurAmt)) saturate(1.04);
-  backdrop-filter: blur(var(--blurAmt)) saturate(1.04);
+  /* soft dim + blur behind the folder */
+  background: rgba(239,254,255,.08);
+  -webkit-backdrop-filter: blur(0px);
+  backdrop-filter: blur(0px);
+  will-change: opacity, backdrop-filter;
   transition:
     opacity 520ms cubic-bezier(.2,.9,.2,1),
     -webkit-backdrop-filter 520ms cubic-bezier(.2,.9,.2,1),
@@ -46,28 +46,10 @@ body.preload .desk__vignette{opacity:0;}
 }
 body.folder-open .desk__blur{
   opacity:1;
-  --blurAmt: 10px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
-body.folder-open .desk__blur{
-  position:absolute;
-  inset:0;
-  z-index:5;
-  opacity:0;
-  pointer-events:none;
-  /* lighter + cleaner */
-  background: rgba(239,254,255,.18);
-  --blurAmt: 0px;
-  -webkit-backdrop-filter: blur(var(--blurAmt)) saturate(1.04);
-  backdrop-filter: blur(var(--blurAmt)) saturate(1.04);
-  transition:
-    opacity 520ms cubic-bezier(.2,.9,.2,1),
-    -webkit-backdrop-filter 520ms cubic-bezier(.2,.9,.2,1),
-    backdrop-filter 520ms cubic-bezier(.2,.9,.2,1);
-}
-body.folder-open .desk__blur{
-  opacity:1;
-  --blurAmt: 10px;
-}
+
 
 
 body.is-ready .topbar,
@@ -265,19 +247,42 @@ body.folder-open .polaroid{
   place-items:center;
   cursor:pointer;
   box-shadow: 0 10px 24px rgba(0,0,0,.10);
+
   opacity:0;
+  visibility:hidden;
   transform: scale(.92);
   pointer-events:none;
+
   transition:
     opacity 260ms cubic-bezier(.2,.9,.2,1),
     transform 260ms cubic-bezier(.2,.9,.2,1),
-    background 260ms ease;
+    background 260ms ease,
+    visibility 0s linear 260ms;
 }
 .folder.is-open .folder__close{
   opacity:1;
+  visibility:visible;
   transform: scale(1);
   pointer-events:auto;
+  transition-delay: 120ms;
+  transition-property: opacity, transform, background, visibility;
+  /* visibility should switch immediately on open */
+  transition-duration: 260ms, 260ms, 260ms, 0s;
+  transition-timing-function: cubic-bezier(.2,.9,.2,1), cubic-bezier(.2,.9,.2,1), ease, linear;
+  transition-delay: 120ms, 120ms, 0ms, 0s;
 }
+@media (max-width: 780px){
+  .folder__close{
+    left:50%;
+    right:auto;
+    top:10px;
+    transform: translateX(-50%) scale(.92);
+  }
+  .folder.is-open .folder__close{
+    transform: translateX(-50%) scale(1);
+  }
+}
+
 .folder__close:hover{ background: rgba(255,255,255,.96); }
 .folder__close:active{ transform: scale(.98); }
 
@@ -665,3 +670,18 @@ body.show-grid .devGrid{opacity:.35;}
 body.folder-open .polaroid{opacity:.75;}
 body.folder-open .prop{opacity:.65;}
 body.folder-open .desk__vignette{opacity:.32;}
+
+
+@media (max-width: 780px){
+  /* Keep the opened folder UI clear of the topbar on mobile */
+  .folder__content{
+    top: 150px;            /* below topbar */
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 520px;
+  }
+  .folder__tabs{
+    gap:10px;
+    margin-bottom:12px;
+  }
+}
