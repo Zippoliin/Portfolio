@@ -3,100 +3,148 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Creative City Drive — Portfolio</title>
-  <link rel="stylesheet" href="./styles.css" />
-
-  <!-- Three.js via importmap (CDN) -->
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.161.0/build/three.module.js"
-      }
-    }
-  </script>
+  <title>Francesco Biondi — Medicina Estetica</title>
+  <meta name="description" content="Sito esperienziale: prenota, scopri trattamenti e prodotti. Medicina estetica naturale e personalizzata." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="app">
-    <canvas id="c"></canvas>
+  <a class="skip" href="#main">Vai al contenuto</a>
 
-    <!-- HUD -->
-    <div id="hud">
-      <div class="hud-row">
-        <div class="pill">Speed: <span id="speed">0</span></div>
-        <div class="pill">Checkpoint: <span id="checkpoint">HUB</span></div>
-      </div>
-      <div id="hint" class="hint">Rallenta vicino ai totem per leggere</div>
-
-      <button id="toggleHelp" class="btn-ghost" aria-label="Toggle help">Comandi</button>
-      <div id="help" class="help">
-        <div class="help-title">Comandi (solo tastiera)</div>
-        <div class="help-grid">
-          <div><b>W</b> accelera</div><div><b>S</b> frena / retro lenta</div>
-          <div><b>A/D</b> sterza</div><div><b>SPAZIO</b> derapata</div>
-          <div><b>SHIFT</b> salto (solo rampa)</div><div><b>R</b> reset checkpoint</div>
-        </div>
+  <header class="topbar" aria-label="Barra superiore">
+    <div class="brand">
+      <div class="brand__mark" aria-hidden="true"></div>
+      <div class="brand__txt">
+        <div class="brand__name">Francesco Biondi</div>
+        <div class="brand__sub">Medicina estetica • Catania</div>
       </div>
     </div>
 
-    <!-- Panel contenuti (appare solo se rallenti vicino ai trigger) -->
-    <aside id="panel" aria-live="polite">
-      <div class="panel-head">
-        <div>
-          <div id="panelTitle" class="panel-title">Titolo</div>
-          <div id="panelSubtitle" class="panel-subtitle">Sottotitolo</div>
+    <div class="topbar__actions">
+      <button class="chip" id="btnBook" type="button" aria-label="Prenota">Prenota</button>
+      <button class="iconbtn" id="btnInfo" type="button" aria-haspopup="dialog" aria-controls="infoDialog" aria-expanded="false" title="Info">
+        i
+      </button>
+    </div>
+  </header>
+
+  <main id="main" class="stage" aria-label="Scena principale">
+    <!-- Desk scene -->
+    <section class="desk" aria-label="Scrivania">
+      <div class="desk__vignette" aria-hidden="true"></div>
+
+      <!-- Props (purely decorative) -->
+      <div class="prop prop--glove" aria-hidden="true"></div>
+      <div class="prop prop--mirror" aria-hidden="true"></div>
+      <div class="prop prop--bottle" aria-hidden="true"></div>
+      <div class="prop prop--pen" aria-hidden="true"></div>
+      <div class="prop prop--notepad" aria-hidden="true"></div>
+      <div class="prop prop--syringe" aria-hidden="true"></div>
+
+      <!-- Folder -->
+      <button id="folder" class="folder" type="button"
+              aria-label="Apri cartella navigazione"
+              aria-haspopup="true"
+              aria-expanded="false">
+        <span class="folder__shadow" aria-hidden="true"></span>
+        <span class="folder__base" aria-hidden="true"></span>
+        <span class="folder__tab" aria-hidden="true"></span>
+        <span class="folder__cover" aria-hidden="true">
+          <span class="folder__title">
+            <span class="folder__titleSmall">Portfolio</span>
+            <span class="folder__titleBig">Studio</span>
+          </span>
+          <span class="folder__hint">Passa / clicca per aprire</span>
+        </span>
+      </button>
+
+      <!-- Flyout menu (appears when folder opens) -->
+      <nav id="folderMenu" class="menu" aria-label="Sezioni del sito">
+        <button class="menu__item" data-target="home">
+          <span class="menu__k">01</span>
+          <span class="menu__t">Home</span>
+        </button>
+        <button class="menu__item" data-target="about">
+          <span class="menu__k">02</span>
+          <span class="menu__t">Chi sono</span>
+        </button>
+        <button class="menu__item" data-target="treatments">
+          <span class="menu__k">03</span>
+          <span class="menu__t">Trattamenti</span>
+        </button>
+        <button class="menu__item" data-target="products">
+          <span class="menu__k">04</span>
+          <span class="menu__t">Prodotti</span>
+        </button>
+        <button class="menu__item" data-target="book">
+          <span class="menu__k">05</span>
+          <span class="menu__t">Prenota</span>
+        </button>
+        <button class="menu__item" data-target="contact">
+          <span class="menu__k">06</span>
+          <span class="menu__t">Contatti</span>
+        </button>
+      </nav>
+
+      <!-- Minimal hero text on desk -->
+      <div class="hero" aria-label="Messaggio principale">
+        <h1>Medicina estetica naturale e personalizzata</h1>
+        <p>
+          Percorsi chiari, risultati armonici, priorità assoluta alla sicurezza.
+          Entra nella cartella per esplorare trattamenti, prodotti e prenotazioni.
+        </p>
+        <div class="hero__cta">
+          <button class="btn" id="ctaOpen" type="button">Apri la cartella</button>
+          <button class="btn btn--ghost" data-open="book" type="button">Prenota ora</button>
         </div>
-        <button id="panelClose" class="btn" aria-label="Chiudi pannello">✕</button>
       </div>
-      <div id="panelBody" class="panel-body"></div>
-    </aside>
 
-    <!-- Mobile fallback (senza guida) -->
-    <div id="mobile" class="mobile hidden">
-      <div class="mobile-hero">
-        <div class="mobile-badge">Portfolio</div>
-        <h1>Creative City</h1>
-        <p>Versione mobile semplificata (senza guida). Scorri per esplorare i distretti.</p>
-      </div>
-
-      <section class="mobile-section">
-        <h2>Video Editing</h2>
-        <p>Ritmo, storytelling, emozione. Montaggio pensato per trattenere attenzione.</p>
-        <div class="mobile-card">
-          <div class="mobile-card-title">Showreel</div>
-          <div class="ratio">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Showreel"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
-          </div>
-        </div>
-      </section>
-
-      <section class="mobile-section">
-        <h2>Graphic Design</h2>
-        <p>Branding, copertine, identità visive, UI. Design pulito e memorabile.</p>
-        <div class="mobile-grid">
-          <div class="mobile-card"><div class="mobile-card-title">Copertine</div><p>Miniature orientate al CTR.</p></div>
-          <div class="mobile-card"><div class="mobile-card-title">Branding</div><p>Sistemi visivi coerenti.</p></div>
-          <div class="mobile-card"><div class="mobile-card-title">UI</div><p>Interfacce semplici e leggibili.</p></div>
-        </div>
-      </section>
-
-      <section class="mobile-section">
-        <h2>Video Maker</h2>
-        <p>Riprese, backstage, processo creativo. Output pronto per social/ADV.</p>
-        <div class="mobile-card">
-          <div class="mobile-card-title">Contattami</div>
-          <p>Email: <a href="mailto:ciao@tuodominio.it">ciao@tuodominio.it</a></p>
-          <p>Instagram / LinkedIn: inserisci i tuoi link</p>
-        </div>
-      </section>
-
-      <footer class="mobile-footer">
-        <small>Su desktop vivi la versione “drive” con tastiera.</small>
+      <footer class="desk__footer" aria-label="Footer">
+        <span>© <span id="year"></span> Studio Medico • Tutti i diritti riservati</span>
+        <span class="sep" aria-hidden="true">•</span>
+        <a class="link" href="#" data-open="privacy">Privacy</a>
+        <span class="sep" aria-hidden="true">•</span>
+        <a class="link" href="#" data-open="terms">Termini</a>
       </footer>
-    </div>
-  </div>
+    </section>
 
-  <script type="module" src="./main.js"></script>
+    <!-- Overlay panels -->
+    <section class="overlay" id="overlay" aria-hidden="true">
+      <div class="overlay__backdrop" id="overlayBackdrop" aria-hidden="true"></div>
+
+      <article class="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+        <div class="panel__top">
+          <div class="panel__crumb">Cartella / <span id="panelCrumb">Home</span></div>
+          <button class="iconbtn iconbtn--close" id="closePanel" type="button" aria-label="Chiudi">×</button>
+        </div>
+        <h2 id="panelTitle" class="panel__title">Home</h2>
+        <div class="panel__content" id="panelContent"></div>
+      </article>
+    </section>
+
+    <!-- Info dialog -->
+    <section class="dialog" id="infoDialog" role="dialog" aria-modal="true" aria-labelledby="infoTitle" aria-hidden="true">
+      <div class="dialog__backdrop" data-close="info" aria-hidden="true"></div>
+      <div class="dialog__box">
+        <div class="dialog__top">
+          <h3 id="infoTitle">Info rapida</h3>
+          <button class="iconbtn iconbtn--close" data-close="info" type="button" aria-label="Chiudi">×</button>
+        </div>
+        <p>
+          Questo è un prototipo “scrivania + cartella” in HTML/CSS/JS.
+          Puoi collegare il tasto <strong>Prenota</strong> a MioDottore, WhatsApp o un form.
+        </p>
+        <ul class="bullets">
+          <li>Desktop: hover/click per aprire la cartella.</li>
+          <li>Mobile: tap per aprire, menu in overlay.</li>
+          <li>Animazioni leggere e professionali.</li>
+        </ul>
+        <div class="dialog__actions">
+          <button class="btn btn--ghost" data-close="info" type="button">Ok</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
