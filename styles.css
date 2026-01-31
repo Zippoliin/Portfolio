@@ -100,7 +100,7 @@ body.is-ready .desk__vignette{
   /* aligned to the internal 100x100 layout grid (not visible to users) */
   top:3%;
   left:4%;
-  width:360px;
+  width:320px;
   background:var(--white);
   border:none;
   text-align:left;
@@ -112,7 +112,7 @@ body.is-ready .desk__vignette{
   z-index:3;
 }
 .polaroid__photo{
-  height:300px;
+  height:260px;
   border-radius:10px;
   background-image:url("assets/doctor.jpg");
   background-size:cover;
@@ -123,6 +123,12 @@ body.is-ready .desk__vignette{
 .polaroid__name{font-weight:900; letter-spacing:.2px;}
 .polaroid__role{font-size:13px; opacity:.9;}
 .polaroid__hint{font-size:12px; opacity:.7; margin-top:6px;}
+
+/* Desktop: when folder opens, lift the polaroid a bit to keep the folder tabs clear */
+body.folder-open .polaroid{
+  transform: rotate(-1.2deg) translateY(-18px);
+}
+
 
 /* Props */
 .prop{
@@ -487,8 +493,8 @@ body.show-grid .devGrid{opacity:.35;}
 
 /* Responsive */
 @media (max-width: 980px){
-  .polaroid{width:320px;}
-  .polaroid__photo{height:260px;}
+  .polaroid{width:280px;}
+  .polaroid__photo{height:230px;}
   .prop--beforeAfter{right:40px;}
   .prop--syringe{right:40px;}
 }
@@ -498,10 +504,10 @@ body.show-grid .devGrid{opacity:.35;}
   .polaroid{
     top:3%;
     left:50%;
-    width:230px; /* ~ -50px vs desktop */
+    width:170px; /* ~ -150px vs desktop */
     transform: translateX(-50%) rotate(-1.2deg);
   }
-  .polaroid__photo{height:190px;}
+  .polaroid__photo{height:140px;}
 
   /* Props: re-balanced for phone layouts */
   .prop--syringe{top:92px; right:10px; width:190px; transform: rotate(-16deg);}
