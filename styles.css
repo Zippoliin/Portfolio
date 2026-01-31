@@ -264,7 +264,7 @@ body.folder-open .polaroid{
   visibility:visible;
   transform: scale(1);
   pointer-events:auto;
-  transition-delay: 200ms;
+  transition-delay: 80ms;
   transition-property: opacity, transform, background, visibility;
   /* visibility should switch immediately on open */
   transition-duration: 260ms, 260ms, 260ms, 0s;
@@ -276,7 +276,7 @@ body.folder-open .polaroid{
     position: fixed;
     left:50%;
     right:auto;
-    top:112px; /* below topbar */
+    top:128px; /* centered under topbar */
     transform: translateX(-50%) scale(.92);
     z-index: 60;
   }
@@ -338,9 +338,9 @@ body.folder-open .polaroid{
 .folder__content[hidden]{display:none;}
 
 @media (max-width: 780px){
-  /* Keep tabs stable when panel height changes */
+  /* Keep opened folder UI clear of the topbar on mobile (stable across tabs) */
   .folder__content{
-    top: 250px;          /* anchored below topbar + polaroid area */
+    top: clamp(300px, 36vh, 390px);
     transform: translateX(-50%);
     width: 92%;
     max-width: 520px;
