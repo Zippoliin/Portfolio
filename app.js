@@ -1,284 +1,274 @@
-(function(){
-  const desk = document.querySelector('.desk');
-  const folder = document.getElementById('folder');
-  const menu = document.getElementById('folderMenu');
-  const overlay = document.getElementById('overlay');
-  const overlayBackdrop = document.getElementById('overlayBackdrop');
-  const panelTitle = document.getElementById('panelTitle');
-  const panelCrumb = document.getElementById('panelCrumb');
-  const panelContent = document.getElementById('panelContent');
-  const closePanel = document.getElementById('closePanel');
-  const ctaOpen = document.getElementById('ctaOpen');
-  const btnBook = document.getElementById('btnBook');
-  const btnContact = document.getElementById('btnContact');
-  const btnAbout = document.getElementById('btnAbout');
-  const btnInfo = document.getElementById('btnInfo');
-  const infoDialog = document.getElementById('infoDialog');
-  const year = document.getElementById('year');
+/* Studio Dott. Francesco Biondi – Desk Folder Prototype */
 
-  year.textContent = new Date().getFullYear();
+const qs = (s, el=document)=>el.querySelector(s);
+const qsa = (s, el=document)=>Array.from(el.querySelectorAll(s));
 
-  // Dev-only 100x100 grid overlay (hidden for normal users)
-  try{
-    const params = new URLSearchParams(window.location.search);
-    if(params.get('grid') === '1') document.body.classList.add('show-grid');
-  }catch(e){}
+// Dev grid (100x100) toggle via ?grid=1
+try{
+  const sp = new URLSearchParams(location.search);
+  if(sp.get('grid') === '1') document.body.classList.add('show-grid');
+}catch{}
 
-  // Simple content templates (replace with real copy later)
-  const pages = {
-    home: {
-      title: 'Home',
-      crumb: 'Home',
-      html: `
-        <div class="kicker">Approccio</div>
-        <p>
-          Un percorso chiaro, costruito su ascolto, anamnesi e obiettivi realistici.
-          L’idea è valorizzare il viso senza stravolgerlo.
-        </p>
-        <div class="cards">
-          <div class="card">
-            <h4>Sicurezza</h4>
-            <p>Priorità a storia clinica, indicazioni corrette e gestione post-trattamento.</p>
-          </div>
-          <div class="card">
-            <h4>Armonia</h4>
-            <p>Risultati naturali: proporzioni e dettagli prima di tutto.</p>
-          </div>
-          <div class="card">
-            <h4>Percorsi</h4>
-            <p>Non “un singolo trattamento”, ma un piano coerente nel tempo.</p>
-          </div>
-        </div>
-        <hr class="sepLine" />
-        <div class="pills">
-          <span class="pill">Skin Quality</span>
-          <span class="pill">Full Face</span>
-          <span class="pill">Prevenzione</span>
-          <span class="pill">Post-trattamento</span>
-        </div>
-      `
-    },
-    about: {
-      title: 'Chi sono',
-      crumb: 'Chi sono',
-      html: `
-        <p>
-          Qui inserirai una bio breve e credibile: formazione, approccio, cosa ti differenzia.
-          (Questo contenuto è segnaposto: lo sostituiamo con il testo reale.)
-        </p>
-        <div class="cards">
-          <div class="card"><h4>Metodo</h4><p>Anamnesi, valutazione e piano personalizzato.</p></div>
-          <div class="card"><h4>Trasparenza</h4><p>Aspettative realistiche e consenso informato.</p></div>
-          <div class="card"><h4>Follow-up</h4><p>Indicazioni chiare e controllo nel tempo.</p></div>
-        </div>
-      `
-    },
-    treatments: {
-      title: 'Trattamenti',
-      crumb: 'Trattamenti',
-      html: `
-        <p>Hub trattamenti (segnaposto): qui puoi inserire categorie e pagine dedicate.</p>
-        <ul class="list">
-          <li><strong>Viso</strong> — armonizzazione, definizione, skin quality.</li>
-          <li><strong>Labbra</strong> — proporzioni e naturalezza.</li>
-          <li><strong>Prevenzione</strong> — approccio progressivo e conservativo.</li>
-          <li><strong>Corpo</strong> — trattamenti mirati (se presenti).</li>
-        </ul>
-        <hr class="sepLine" />
-        <p><em>Tip:</em> per ogni trattamento aggiungi: per chi è, cosa aspettarsi, post-trattamento, CTA prenota.</p>
-      `
-    },
-    products: {
-      title: 'Prodotti',
-      crumb: 'Prodotti',
-      html: `
-        <p>
-          Mini shop “serio” (segnaposto). L’idea è vendere pochi prodotti perfetti: routine base,
-          mantenimento e post-trattamento.
-        </p>
-        <div class="cards">
-          <div class="card"><h4>Detersione</h4><p>Un prodotto delicato e coerente con la pelle trattata.</p></div>
-          <div class="card"><h4>SPF</h4><p>Il vero anti-age quotidiano: protezione + texture gradevole.</p></div>
-          <div class="card"><h4>Riparatore</h4><p>Barriera cutanea e comfort post-trattamento.</p></div>
-        </div>
-        <hr class="sepLine" />
-        <p>
-          Qui puoi integrare un checkout (Stripe/PayPal) o collegare una pagina Shopify/WooCommerce.
-        </p>
-      `
-    },
-    book: {
-      title: 'Prenota',
-      crumb: 'Prenota',
-      html: `
-        <p>
-          Scegli l’opzione più semplice:
-        </p>
-        <div class="cards">
-          <div class="card">
-            <h4>MioDottore</h4>
-            <p>CTA diretta al profilo di prenotazione (consigliato per partire subito).</p>
-          </div>
-          <div class="card">
-            <h4>WhatsApp Business</h4>
-            <p>Prenotazione rapida + messaggi automatici per orari e sedi.</p>
-          </div>
-          <div class="card">
-            <h4>Modulo sul sito</h4>
-            <p>Richiesta appuntamento con preferenze di data e trattamento.</p>
-          </div>
-        </div>
-        <hr class="sepLine" />
-        <button class="btn" type="button" onclick="alert('Collega qui il link di prenotazione (MioDottore/WhatsApp)')">Apri prenotazione</button>
-      `
-    },
-    contact: {
-      title: 'Contatti',
-      crumb: 'Contatti',
-      html: `
-        <p>
-          Inserisci qui indirizzi, sedi, orari e mappe.
-        </p>
-        <ul class="list">
-          <li><strong>Telefono:</strong> +39 ...</li>
-          <li><strong>WhatsApp:</strong> +39 ...</li>
-          <li><strong>Sedi:</strong> Catania — (aggiungi indirizzi reali)</li>
-          <li><strong>Email:</strong> ...</li>
-        </ul>
-        <hr class="sepLine" />
-        <p class="kicker">Social</p>
-        <div class="pills">
-          <span class="pill">Instagram</span>
-          <span class="pill">YouTube</span>
-          <span class="pill">TikTok</span>
-        </div>
-      `
-    },
-    privacy: {
-      title: 'Privacy',
-      crumb: 'Privacy',
-      html: `
-        <p>Segnaposto privacy policy. (Da compilare con consulente / template GDPR.)</p>
-      `
-    },
-    terms: {
-      title: 'Termini',
-      crumb: 'Termini',
-      html: `
-        <p>Segnaposto termini e condizioni. (Necessari se vendi prodotti.)</p>
-      `
-    }
-  };
+// Year
+qs('#year').textContent = String(new Date().getFullYear());
 
-  // --- Folder open/close ---
-  let isOpen = false;
-  const openFolder = () => {
-    isOpen = true;
-    desk.classList.add('is-open');
-    folder.setAttribute('aria-expanded', 'true');
-  };
-  const closeFolder = () => {
-    isOpen = false;
-    desk.classList.remove('is-open');
-    folder.setAttribute('aria-expanded', 'false');
-  };
-  const toggleFolder = () => (isOpen ? closeFolder() : openFolder());
+// Dialog helpers
+function openDialog(id){
+  const d = qs(id);
+  if(!d) return;
+  d.classList.add('is-open');
+  d.setAttribute('aria-hidden','false');
+}
+function closeDialog(id){
+  const d = qs(id);
+  if(!d) return;
+  d.classList.remove('is-open');
+  d.setAttribute('aria-hidden','true');
+}
 
-  // Hover opens on desktop
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (finePointer) {
-    folder.addEventListener('mouseenter', openFolder);
-    desk.addEventListener('mouseleave', closeFolder);
-  }
+// Booking CTA (placeholder)
+function goBook(){
+  // TODO: replace with MioDottore / WhatsApp / booking URL
+  alert('TODO: collega qui la prenotazione (MioDottore / WhatsApp / form).');
+}
 
-  folder.addEventListener('click', (e) => {
+qs('#btnBook').addEventListener('click', goBook);
+qs('#btnContacts').addEventListener('click', ()=>openDialog('#contactsDialog'));
+qs('#btnAbout').addEventListener('click', ()=>openDialog('#aboutDialog'));
+
+qsa('[data-close="about"]').forEach(b=>b.addEventListener('click', ()=>closeDialog('#aboutDialog')));
+qsa('[data-close="contacts"]').forEach(b=>b.addEventListener('click', ()=>closeDialog('#contactsDialog')));
+qs('#aboutCTA').addEventListener('click', goBook);
+qs('#contactsCTA').addEventListener('click', goBook);
+
+// Close dialogs on backdrop click
+qsa('.dialog__backdrop').forEach(bg=>bg.addEventListener('click', (e)=>{
+  const close = e.currentTarget.getAttribute('data-close');
+  if(close === 'about') closeDialog('#aboutDialog');
+  if(close === 'contacts') closeDialog('#contactsDialog');
+}));
+
+// Folder open logic – hover opens, click pins (like early versions)
+const folder = qs('#folder');
+const folderBtn = qs('#folderBtn');
+const folderContent = qs('#folderContent');
+let pinnedOpen = false;
+
+function setFolderOpen(open){
+  folder.classList.toggle('is-open', open);
+  folderBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  folderContent.hidden = !open;
+}
+
+folder.addEventListener('mouseenter', ()=>{ if(!pinnedOpen) setFolderOpen(true); });
+folder.addEventListener('mouseleave', ()=>{ if(!pinnedOpen) setFolderOpen(false); });
+folderBtn.addEventListener('click', ()=>{
+  pinnedOpen = !pinnedOpen;
+  setFolderOpen(pinnedOpen);
+});
+
+// Keyboard accessibility
+folderBtn.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' || e.key === ' '){
     e.preventDefault();
-    toggleFolder();
+    pinnedOpen = !pinnedOpen;
+    setFolderOpen(pinnedOpen);
+  }
+});
+
+// Tabs
+const tabs = qsa('.tab', folder);
+const panels = {
+  treatments: qs('#panel-treatments'),
+  reviews: qs('#panel-reviews'),
+  products: qs('#panel-products')
+};
+
+function activateTab(name){
+  tabs.forEach(t=>{
+    const active = t.dataset.tab === name;
+    t.classList.toggle('is-active', active);
+    t.setAttribute('aria-selected', active ? 'true' : 'false');
   });
-
-  if (ctaOpen) ctaOpen.addEventListener('click', () => openFolder());
-
-  // --- Panel overlay ---
-  let lastFocused = null;
-  const showPanel = (key) => {
-    const page = pages[key] || pages.treatments;
-    panelTitle.textContent = page.title;
-    panelCrumb.textContent = page.crumb;
-    panelContent.innerHTML = page.html;
-
-    overlay.classList.add('is-visible');
-    overlay.setAttribute('aria-hidden', 'false');
-    lastFocused = document.activeElement;
-
-    // focus close button for accessibility
-    closePanel.focus();
-  };
-
-  const hidePanel = () => {
-    overlay.classList.remove('is-visible');
-    overlay.setAttribute('aria-hidden', 'true');
-    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
-  };
-
-  closePanel.addEventListener('click', hidePanel);
-  overlayBackdrop.addEventListener('click', hidePanel);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      hidePanel();
-      hideInfo();
-      closeFolder();
-    }
+  Object.entries(panels).forEach(([k,p])=>{
+    const active = k === name;
+    p.classList.toggle('is-active', active);
+    p.hidden = !active;
   });
+}
 
-  // menu item click
-  menu.addEventListener('click', (e) => {
-    const btn = e.target.closest('.menu__item');
-    if (!btn) return;
-    const target = btn.getAttribute('data-target');
-    showPanel(target);
-  });
+tabs.forEach(t=>t.addEventListener('click', ()=>activateTab(t.dataset.tab)));
+activateTab('treatments');
 
-  // quick open links
-  document.querySelectorAll('[data-open]').forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      const key = el.getAttribute('data-open');
-      showPanel(key);
-    });
-  });
+// Data
+const TREATMENTS = [
+  {
+    id:'lips',
+    title:'Filler Labbra',
+    meta:'Volume naturale e proporzionato',
+    text:'Un trattamento dedicato a definire e riequilibrare le proporzioni, mantenendo un risultato armonico.',
+    bullets:['Valutazione forma e simmetrie','Tecnica delicata e controllata','Indicazioni post-trattamento chiare'],
+    cta:'Prenota consulenza'
+  },
+  {
+    id:'skinbooster',
+    title:'Skin Booster',
+    meta:'Idratazione profonda e glow',
+    text:'Migliora la qualità della pelle con un approccio mirato a texture, luminosità e idratazione.',
+    bullets:['Pelle più luminosa','Supporto a elasticità','Percorso modulabile'],
+    cta:'Prenota visita'
+  },
+  {
+    id:'bio',
+    title:'Biorivitalizzazione',
+    meta:'Skin quality e micro-rughe',
+    text:'Percorso orientato a migliorare compattezza e aspetto generale, con un risultato naturale.',
+    bullets:['Focus su qualità della pelle','Protocollo personalizzato','Follow-up consigliato'],
+    cta:'Prenota'
+  }
+];
 
-  // Topbar buttons
-  btnBook.addEventListener('click', () => showPanel('book'));
-  btnContact && btnContact.addEventListener('click', () => showPanel('contact'));
-  btnAbout && btnAbout.addEventListener('click', () => showPanel('about'));
+const PRODUCTS = [
+  {
+    id:'hyal-serum',
+    title:'Hyal Serum',
+    meta:'Siero idratante quotidiano',
+    text:'Siero leggero pensato per sostenere l’idratazione e migliorare la sensazione di comfort cutaneo.',
+    bullets:['Texture leggera','Routine AM/PM','Adatto anche post-trattamento'],
+    cta:'Richiedi info'
+  },
+  {
+    id:'barrier-cream',
+    title:'Barrier Cream',
+    meta:'Crema riparatrice',
+    text:'Crema dedicata a barriera e protezione, ideale nei periodi di sensibilità o dopo trattamenti.',
+    bullets:['Supporto barriera','Comfort immediato','Uso quotidiano'],
+    cta:'Richiedi info'
+  },
+  {
+    id:'spf-cloud',
+    title:'SPF 50+ Cloud',
+    meta:'Protezione leggera',
+    text:'Fotoprotezione con finish leggero, pensata per l’uso quotidiano e la routine completa.',
+    bullets:['Finish leggero','Uso quotidiano','Base perfetta per makeup'],
+    cta:'Richiedi info'
+  },
+  {
+    id:'calm-gel',
+    title:'Calm Gel',
+    meta:'Lenitivo post',
+    text:'Gel calmante per ridurre la sensazione di sensibilità e favorire comfort dopo procedure.',
+    bullets:['Effetto lenitivo','Ideale post','Applicazione semplice'],
+    cta:'Richiedi info'
+  },
+  {
+    id:'eye-repair',
+    title:'Eye Repair',
+    meta:'Contorno occhi',
+    text:'Trattamento mirato per la zona perioculare, pensato per idratazione e aspetto più fresco.',
+    bullets:['Zona delicata','Uso AM/PM','Texture morbida'],
+    cta:'Richiedi info'
+  },
+  {
+    id:'clean-foam',
+    title:'Clean Foam',
+    meta:'Detersione soft',
+    text:'Detergente schiuma delicato per mantenere la barriera e preparare la pelle alla routine.',
+    bullets:['Detersione delicata','Adatto a pelli sensibili','Uso quotidiano'],
+    cta:'Richiedi info'
+  }
+];
 
-  // --- Info dialog ---
-  const showInfo = () => {
-    btnInfo.setAttribute('aria-expanded', 'true');
-    infoDialog.classList.add('is-visible');
-    infoDialog.setAttribute('aria-hidden', 'false');
-  };
-  const hideInfo = () => {
-    btnInfo.setAttribute('aria-expanded', 'false');
-    infoDialog.classList.remove('is-visible');
-    infoDialog.setAttribute('aria-hidden', 'true');
-  };
-  btnInfo.addEventListener('click', () => {
-    const expanded = btnInfo.getAttribute('aria-expanded') === 'true';
-    expanded ? hideInfo() : showInfo();
-  });
-  infoDialog.addEventListener('click', (e) => {
-    if (e.target && e.target.getAttribute('data-close') === 'info') hideInfo();
-  });
+const REVIEWS = [
+  {stars:'★★★★★', quote:'"Mi sono sentita ascoltata. Risultato super naturale."', tag:'Trattamento: Labbra'},
+  {stars:'★★★★★', quote:'"Spiegazioni chiare e studio impeccabile. Zero ansia."', tag:'Trattamento: Skin Booster'},
+  {stars:'★★★★★', quote:'"Pelle più luminosa e compatta già dopo pochi giorni."', tag:'Trattamento: Biorivitalizzazione'}
+];
 
-  // Click outside open folder closes it (mobile-friendly)
-  document.addEventListener('click', (e) => {
-    const clickedFolder = e.target.closest('#folder');
-    const clickedMenu = e.target.closest('#folderMenu');
-    const clickedCTA = e.target.closest('#ctaOpen');
-    if (!clickedFolder && !clickedMenu && !clickedCTA) {
-      if (!finePointer) closeFolder();
-    }
+// Render cards
+function renderCard(item, type){
+  const el = document.createElement('article');
+  el.className = 'card';
+  el.tabIndex = 0;
+  el.setAttribute('role','button');
+  el.dataset.type = type;
+  el.dataset.id = item.id;
+
+  el.innerHTML = `
+    <div class="card__img" aria-hidden="true"></div>
+    <div class="card__title">${item.title}</div>
+    <div class="card__meta">${item.meta}</div>
+  `;
+
+  const open = ()=>openDetail(item);
+  el.addEventListener('click', open);
+  el.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); }
   });
-})();
+  return el;
+}
+
+const treatmentsGrid = qs('#treatmentsGrid');
+TREATMENTS.forEach(t=>treatmentsGrid.appendChild(renderCard(t,'treatment')));
+
+const productsGrid = qs('#productsGrid');
+PRODUCTS.forEach(p=>productsGrid.appendChild(renderCard(p,'product')));
+
+const reviewsList = qs('#reviewsList');
+REVIEWS.forEach(r=>{
+  const el = document.createElement('article');
+  el.className = 'review';
+  el.innerHTML = `
+    <div class="avatar" aria-hidden="true"></div>
+    <div>
+      <div class="stars">${r.stars}</div>
+      <div class="quote">${r.quote}</div>
+      <div class="tag">${r.tag}</div>
+    </div>
+    <div class="thumb" aria-hidden="true"></div>
+  `;
+  reviewsList.appendChild(el);
+});
+
+// Detail modal
+const detail = qs('#detail');
+const detailTitle = qs('#detailTitle');
+const detailText = qs('#detailText');
+const detailBullets = qs('#detailBullets');
+const detailCTA = qs('#detailCTA');
+
+function openDetail(item){
+  detailTitle.textContent = item.title;
+  detailText.textContent = item.text;
+  detailBullets.innerHTML = '';
+  item.bullets.forEach(b=>{
+    const li = document.createElement('li');
+    li.textContent = b;
+    detailBullets.appendChild(li);
+  });
+  detailCTA.textContent = item.cta || 'Prenota';
+  detail.classList.add('is-open');
+  detail.setAttribute('aria-hidden','false');
+}
+function closeDetail(){
+  detail.classList.remove('is-open');
+  detail.setAttribute('aria-hidden','true');
+}
+
+qs('#detailClose').addEventListener('click', closeDetail);
+qsa('[data-close-detail="1"]').forEach(b=>b.addEventListener('click', closeDetail));
+
+// CTA inside detail -> booking
+qs('#detailCTA').addEventListener('click', ()=>{
+  closeDetail();
+  goBook();
+});
+
+// ESC closes overlays
+window.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape'){
+    if(detail.classList.contains('is-open')) closeDetail();
+    if(qs('#aboutDialog').classList.contains('is-open')) closeDialog('#aboutDialog');
+    if(qs('#contactsDialog').classList.contains('is-open')) closeDialog('#contactsDialog');
+  }
+});
