@@ -513,10 +513,15 @@ body.show-grid .devGrid{opacity:.35;}
   /* Keep folder perfectly centered on mobile as well */
   .folder{top:50%; z-index:6;}
   .folder__content{width:90%;}
-  /* Mobile: keep choices readable (avoid overlapping the polaroid) */
-  .folder__content{top:60%;}
-  .folder.is-open .folder__content{top:60%;}
-  body.folder-open .polaroid{opacity:.32; filter: blur(1px);}
+  /* Mobile: keep choices centered; when the folder opens we move the polaroid up instead */
+  .folder__content{top:56%;}
+  .folder.is-open .folder__content{top:56%;}
+
+  /* On open, lift the polaroid slightly so it never fights the tabs */
+  body.folder-open .polaroid{
+    top:1.2%;
+    transform: translateX(-50%) rotate(-1.2deg) translateY(-18px);
+  }
   .cardGrid{grid-template-columns: 1fr 1fr;}
   .folder__tabs{grid-template-columns: 1fr; gap:10px;}
   .tab{
