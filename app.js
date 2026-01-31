@@ -16,6 +16,12 @@
 
   year.textContent = new Date().getFullYear();
 
+  // Dev-only 100x100 grid overlay (hidden for normal users)
+  try{
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('grid') === '1') document.body.classList.add('show-grid');
+  }catch(e){}
+
   // Simple content templates (replace with real copy later)
   const pages = {
     home: {
@@ -188,7 +194,7 @@
     toggleFolder();
   });
 
-  ctaOpen.addEventListener('click', () => openFolder());
+  if (ctaOpen) ctaOpen.addEventListener('click', () => openFolder());
 
   // --- Panel overlay ---
   let lastFocused = null;
