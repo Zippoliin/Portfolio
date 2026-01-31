@@ -17,37 +17,32 @@ body{
   overflow-x:hidden;
 }
 
-/* Page intro (adds motion without feeling "game-y") */
-body:not(.is-loaded) .topbar,
-body:not(.is-loaded) .polaroid,
-body:not(.is-loaded) .prop,
-body:not(.is-loaded) .folder,
-body:not(.is-loaded) .footer{
+/* Page enter animation (desktop + mobile)
+   - lightweight: fade + slide + subtle glow
+   - respects prefers-reduced-motion below
+*/
+body.preload .topbar,
+body.preload .desk{
   opacity:0;
-  transform: translateY(-18px) scale(.99);
+  transform: translateY(-22px);
+  filter: blur(8px);
 }
-body:not(.is-loaded) .desk__vignette{opacity:0;}
+body.preload .desk__vignette{opacity:0;}
 
-body.is-loaded .topbar,
-body.is-loaded .polaroid,
-body.is-loaded .prop,
-body.is-loaded .folder,
-body.is-loaded .footer{
+body.is-ready .topbar,
+body.is-ready .desk{
   opacity:1;
-  transform: translateY(0) scale(1);
-  transition: opacity 700ms cubic-bezier(.2,.9,.2,1), transform 700ms cubic-bezier(.2,.9,.2,1);
+  transform:none;
+  filter:none;
+  transition:
+    opacity 520ms cubic-bezier(.2,.9,.2,1),
+    transform 520ms cubic-bezier(.2,.9,.2,1),
+    filter 520ms cubic-bezier(.2,.9,.2,1);
 }
-body.is-loaded .desk__vignette{
+body.is-ready .desk__vignette{
   opacity:.58;
-  transition: opacity 900ms ease;
+  transition: opacity 720ms cubic-bezier(.2,.9,.2,1);
 }
-
-/* Stagger (pure CSS, no JS needed) */
-body.is-loaded .topbar{transition-delay:40ms;}
-body.is-loaded .folder{transition-delay:90ms;}
-body.is-loaded .prop{transition-delay:130ms;}
-body.is-loaded .polaroid{transition-delay:170ms;}
-body.is-loaded .footer{transition-delay:220ms;}
 
 /* Topbar */
 .topbar{
@@ -497,55 +492,34 @@ body.show-grid .devGrid{opacity:.35;}
 }
 @media (max-width: 780px){
   .desk{min-height:900px;}
-  .polaroid{left:14px; top:14px; width:260px; transform: rotate(-.9deg);}
-  .polaroid__photo{height:210px;}
+  /* Polaroid: smaller on mobile (~ -50px) */
+  .polaroid{left:14px; top:14px; width:230px;}
+  .polaroid__photo{height:190px;}
 
-  /* Keep the before/after visible but tighter on mobile */
-  .prop--beforeAfter{top:176px; right:14px; gap:10px; transform: rotate(2deg);}
+  /* Props: re-balanced for phone layouts */
+  .prop--syringe{top:92px; right:10px; width:190px; transform: rotate(-16deg);}
+  .prop--beforeAfter{top:170px; right:12px; gap:10px; transform: rotate(2deg) scale(.92);}
   .pola{width:112px;}
+  .prop--bottles{bottom:26px; right:12px; width:170px;}
+  .prop--gloves{bottom:24px; left:12px; width:170px;}
 
-  /* Reposition vectors for phone so they don't feel random */
-  .prop--syringe{top:98px; right:18px; width:190px; transform: rotate(-16deg); opacity:.92;}
-  .prop--bottles{bottom:86px; right:18px; width:190px; transform: rotate(-6deg);}
-  .prop--gloves{bottom:74px; left:18px; width:200px; transform: rotate(8deg);}
-
-  /* Place folder so open tabs never collide with the polaroid */
-  .folder{top:64%;}
-  .folder.is-open{top:60%;}
+  /* Keep folder interaction above other elements */
+  .folder{top:62%; z-index:6;}
   .folder__content{width:90%;}
-  .folder.is-open .folder__content{top:50%;}
+  /* When the folder opens, keep the 3 choices visually above the polaroid */
+  .folder__content{top:46%;}
+  .folder.is-open .folder__content{top:42%;}
   .cardGrid{grid-template-columns: 1fr 1fr;}
   .folder__tabs{grid-template-columns: 1fr; gap:10px;}
   .tab{text-align:center;}
 }
-
-/* Extra-small phones */
-@media (max-width: 520px){
-  .topbar{padding:0 14px; height:60px;}
-  .desk{height:calc(100vh - 60px); min-height:860px;}
-
-  .polaroid{width:220px;}
-  .polaroid__photo{height:170px;}
-  .polaroid__name{font-size:14px;}
-  .polaroid__role{font-size:12px;}
-
-  .prop--beforeAfter{top:160px; right:12px;}
-  .pola{width:98px;}
-
-  .prop--syringe{top:86px; right:-6px; width:170px;}
-  .prop--bottles{bottom:78px; right:10px; width:170px;}
-  .prop--gloves{bottom:64px; left:10px; width:180px;}
-
-  /* Make sure the folder content has room and stays readable */
-  .folder{top:68%; width:94vw;}
-  .folder.is-open{top:62%;}
-  .folder__content{top:58%;}
-  .folder.is-open .folder__content{top:50%;}
-
-  .folder__tabs{margin-bottom:12px;}
-  .tab{padding:18px 16px 16px;}
-}
 @media (prefers-reduced-motion: reduce){
+  body.preload .topbar,
+  body.preload .desk{opacity:1; transform:none; filter:none;}
+  body.preload .desk__vignette{opacity:.58;}
+  body.is-ready .topbar,
+  body.is-ready .desk{transition:none;}
+  body.is-ready .desk__vignette{transition:none;}
   .folderSvg__cover{transition:none;}
   .tab{transition:none;}
   .card{transition:none;}

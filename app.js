@@ -3,29 +3,17 @@
 const qs = (s, el=document)=>el.querySelector(s);
 const qsa = (s, el=document)=>Array.from(el.querySelectorAll(s));
 
-// Intro animation – subtle slide/glow on first load (desktop + mobile)
-// Respects prefers-reduced-motion.
-(() => {
-  try {
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) {
-      document.body.classList.add('is-loaded');
-      return;
-    }
-    // Start from initial (CSS) state, then reveal after first paint
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => document.body.classList.add('is-loaded'));
-    });
-  } catch {
-    document.body.classList.add('is-loaded');
-  }
-})();
-
 // Dev grid (100x100) toggle via ?grid=1
 try{
   const sp = new URLSearchParams(location.search);
   if(sp.get('grid') === '1') document.body.classList.add('show-grid');
 }catch{}
+
+// Page enter animation: switch from .preload to .is-ready once assets are ready
+window.addEventListener('load', ()=>{
+  document.body.classList.remove('preload');
+  document.body.classList.add('is-ready');
+});
 
 // Year
 qs('#year').textContent = String(new Date().getFullYear());
