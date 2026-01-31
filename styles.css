@@ -34,12 +34,40 @@ body.preload .desk__vignette{opacity:0;}
   z-index:5;
   opacity:0;
   pointer-events:none;
-  /* Stronger focus mode when the folder is open (dims + blurs background) */
-  background: rgba(239,254,255,.42);
-  backdrop-filter: blur(18px) saturate(1.15);
-  transition: opacity 260ms ease;
+  /* lighter + cleaner */
+  background: rgba(239,254,255,.18);
+  --blurAmt: 0px;
+  -webkit-backdrop-filter: blur(var(--blurAmt)) saturate(1.04);
+  backdrop-filter: blur(var(--blurAmt)) saturate(1.04);
+  transition:
+    opacity 520ms cubic-bezier(.2,.9,.2,1),
+    -webkit-backdrop-filter 520ms cubic-bezier(.2,.9,.2,1),
+    backdrop-filter 520ms cubic-bezier(.2,.9,.2,1);
 }
-body.folder-open .desk__blur{ opacity:1; }
+body.folder-open .desk__blur{
+  opacity:1;
+  --blurAmt: 10px;
+}
+body.folder-open .desk__blur{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  opacity:0;
+  pointer-events:none;
+  /* lighter + cleaner */
+  background: rgba(239,254,255,.18);
+  --blurAmt: 0px;
+  -webkit-backdrop-filter: blur(var(--blurAmt)) saturate(1.04);
+  backdrop-filter: blur(var(--blurAmt)) saturate(1.04);
+  transition:
+    opacity 520ms cubic-bezier(.2,.9,.2,1),
+    -webkit-backdrop-filter 520ms cubic-bezier(.2,.9,.2,1),
+    backdrop-filter 520ms cubic-bezier(.2,.9,.2,1);
+}
+body.folder-open .desk__blur{
+  opacity:1;
+  --blurAmt: 10px;
+}
 
 
 body.is-ready .topbar,
@@ -153,8 +181,9 @@ body.folder-open .polaroid{
   border-radius: 12px;
   background-image:url("assets/doctor.jpg");
   background-size:cover;
-  /* Crop out the black top bar and keep the face centered */
-  background-position: 50% 62%;
+  /* Lift framing a bit so the head isn't cropped */
+  background-position: 50% 42%;
+  background-size: 112%;
   background-color:rgba(65,102,212,.10);
 }
 .polaroid__caption{padding-top:10px; display:flex; flex-direction:column; gap:2px;}
@@ -218,6 +247,39 @@ body.folder-open .polaroid{
   display:block;
   filter: drop-shadow(0 18px 44px rgba(0,0,0,.18));
 }
+
+
+.folder__close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:40px;
+  height:40px;
+  border-radius:999px;
+  border:1px solid rgba(65,102,212,.22);
+  background: rgba(255,255,255,.86);
+  color: var(--brand);
+  font-size:22px;
+  line-height:1;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  opacity:0;
+  transform: scale(.92);
+  pointer-events:none;
+  transition:
+    opacity 260ms cubic-bezier(.2,.9,.2,1),
+    transform 260ms cubic-bezier(.2,.9,.2,1),
+    background 260ms ease;
+}
+.folder.is-open .folder__close{
+  opacity:1;
+  transform: scale(1);
+  pointer-events:auto;
+}
+.folder__close:hover{ background: rgba(255,255,255,.96); }
+.folder__close:active{ transform: scale(.98); }
 
 .folderSvg__cover{
   transform: perspective(1100px) rotateX(0deg) rotateZ(0deg);
@@ -545,8 +607,7 @@ body.show-grid .devGrid{opacity:.35;}
     width:180px; /* ~ -150px vs old desktop */
     transform: translateX(-50%) rotate(-1.2deg);
   }
-  /* Mobile: keep a tight, clean crop (no black bar) */
-  .polaroid__photo{width:104px; margin:0 auto 10px; background-position: 50% 62%;}
+  .polaroid__photo{width:104px; margin:0 auto 10px; background-position: 50% 42%; background-size: 120%;}
 
   /* Props: re-balanced for phone layouts */
   .prop--syringe{top:92px; right:10px; width:190px; transform: rotate(-16deg);}
@@ -559,8 +620,9 @@ body.show-grid .devGrid{opacity:.35;}
   .folder{top: calc(50% - 110px); z-index:6;}
   .folder__content{width:90%;}
   /* Mobile: keep choices centered; when the folder opens we move the polaroid up instead */
-  .folder__content{top:54%;}
-  .folder.is-open .folder__content{top:54%;}
+  .folder__content{top:56%;}
+  /* On open, drop the choices a bit so they never touch the topbar */
+  .folder.is-open .folder__content{top:60%;}
 
   /* On open, lift the polaroid slightly so it never fights the tabs */
   body.folder-open .polaroid{
@@ -598,3 +660,8 @@ body.show-grid .devGrid{opacity:.35;}
     background-position: 52% 28%;
   }
 }
+
+/* Folder-open focus: ensure background is visually subdued even where backdrop-filter is not supported */
+body.folder-open .polaroid{opacity:.75;}
+body.folder-open .prop{opacity:.65;}
+body.folder-open .desk__vignette{opacity:.32;}

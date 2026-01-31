@@ -58,6 +58,7 @@ qsa('.dialog__backdrop').forEach(bg=>bg.addEventListener('click', (e)=>{
 const folder = qs('#folder');
 const folderBtn = qs('#folderBtn');
 const folderContent = qs('#folderContent');
+const folderClose = qs('#folderClose');
 let pinnedOpen = false;
 
 function setFolderOpen(open){
@@ -73,6 +74,13 @@ folderBtn.addEventListener('click', ()=>{
   pinnedOpen = !pinnedOpen;
   setFolderOpen(pinnedOpen);
 });
+
+// Close button (visible only when open)
+folderClose.addEventListener('click', ()=>{
+  pinnedOpen = false;
+  setFolderOpen(false);
+});
+
 
 // Keyboard accessibility
 folderBtn.addEventListener('keydown', (e)=>{
@@ -277,5 +285,6 @@ window.addEventListener('keydown', (e)=>{
     if(detail.classList.contains('is-open')) closeDetail();
     if(qs('#aboutDialog').classList.contains('is-open')) closeDialog('#aboutDialog');
     if(qs('#contactsDialog').classList.contains('is-open')) closeDialog('#contactsDialog');
+    if(folder.classList.contains('is-open')){ pinnedOpen = false; setFolderOpen(false); }
   }
 });
