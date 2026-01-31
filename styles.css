@@ -347,6 +347,38 @@ body.folder-open .polaroid{
   }
 }
 
+/*
+  Mobile open-state placement (matches the user's sketch):
+  - Tabs + close button live in the upper area of the viewport
+  - Folder artwork stays where it is (behind), but the UI is fixed and stable
+  - No jumping when switching between Trattamenti/Recensioni/Prodotti
+*/
+@media (max-width: 780px){
+  body.folder-open .folder__content{
+    position: fixed;
+    left: 50%;
+    top: calc(210px + env(safe-area-inset-top));
+    transform: translateX(-50%);
+    width: min(92vw, 520px);
+    max-width: 520px;
+    z-index: 14;
+  }
+
+  /* Close button centered above the three choices */
+  .folder__close{
+    position: fixed;
+    left: 50%;
+    top: calc(162px + env(safe-area-inset-top));
+    transform: translateX(-50%) scale(.96);
+    z-index: 15;
+  }
+  .folder.is-open .folder__close{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
 .folder__tabs{
   display:grid;
   grid-template-columns: repeat(3, 1fr);
