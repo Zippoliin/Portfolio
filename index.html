@@ -1,217 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Studio Dott. Francesco Biondi</title>
-  <meta name="description" content="Studio di medicina estetica: trattamenti viso, recensioni, prodotti e prenotazioni." />
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Video Editor</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="preload">
+<body>
 
-<header class="topbar" aria-label="Barra superiore">
-  <div class="topbar__left"></div>
-  <div class="topbar__right">
-    <button class="chip" id="btnBook" type="button">Prenota</button>
-    <button class="chip chip--ghost" id="btnContacts" type="button">Contatti</button>
-  </div>
-</header>
-
-<main class="desk" id="main" aria-label="Scrivania studio medico">
-  <div class="desk__vignette" aria-hidden="true"></div>
-  <div class="desk__blur" aria-hidden="true"></div>
-
-  <!-- Polaroid (CHI SONO) -->
-  <button class="polaroid" id="btnAbout" type="button" aria-haspopup="dialog" aria-controls="aboutDialog">
-    <div class="polaroid__photo" role="img" aria-label="Foto del Dott. Francesco Biondi"></div>
-    <div class="polaroid__caption">
-      <div class="polaroid__name">Dott. Francesco Biondi</div>
-      <div class="polaroid__role">Medicina estetica</div>
-      <div class="polaroid__hint">Clicca per info</div>
-    </div>
-  </button>
-
-  <!-- Props (vettoriali come prime versioni) -->
-  <img class="prop prop--gloves" src="assets/gloves.svg" alt="" aria-hidden="true" />
-  <img class="prop prop--syringe" src="assets/syringe.svg" alt="" aria-hidden="true" />
-  <img class="prop prop--bottles" src="assets/bottles.svg" alt="" aria-hidden="true" />
-
-  <!-- Prima/Dopo spostato a destra per dare spazio alla polaroid -->
-  <div class="prop prop--beforeAfter" aria-hidden="true">
-    <img class="pola pola--before" src="assets/before-after-before.svg" alt="" />
-    <img class="pola pola--after" src="assets/before-after-after.svg" alt="" />
-  </div>
-
-  <!-- Cartella clinica (animazione come prime versioni) -->
-  <div class="folder" id="folder" aria-label="Cartella navigazione">
-    <button class="folder__btn" id="folderBtn" type="button" aria-expanded="false" aria-label="Apri cartella">
-      <span class="folder__shadow" aria-hidden="true"></span>
-
-      <svg class="folder__svg" viewBox="0 0 820 520" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="baseGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#EFFEFF" stop-opacity="0.95" />
-            <stop offset="1" stop-color="#EFFEFF" stop-opacity="0.78" />
-          </linearGradient>
-          <linearGradient id="edgeGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#4166D4" stop-opacity="0.22" />
-            <stop offset="1" stop-color="#4166D4" stop-opacity="0.10" />
-          </linearGradient>
-          <linearGradient id="coverGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#EFFEFF" />
-            <stop offset="1" stop-color="#EFFEFF" stop-opacity="0.86" />
-          </linearGradient>
-        </defs>
-
-        <!-- base -->
-        <g class="folderSvg__base">
-          <path d="M90 160 Q90 125 125 125 H330 Q360 125 372 140 L410 185 H695 Q730 185 730 220 V420 Q730 455 695 455 H125 Q90 455 90 420 Z" fill="url(#baseGrad)" />
-          <path d="M90 160 Q90 125 125 125 H330 Q360 125 372 140 L410 185 H695 Q730 185 730 220 V420 Q730 455 695 455 H125 Q90 455 90 420 Z" fill="url(#edgeGrad)" opacity="0.55" />
-          <path d="M125 125 H330 Q360 125 372 140 L410 185" fill="none" stroke="#4166D4" stroke-opacity="0.22" stroke-width="4" />
-        </g>
-
-        <!-- cover opens -->
-        <g class="folderSvg__cover" transform-origin="410px 185px">
-          <path d="M110 185 H710 Q742 185 742 217 V420 Q742 460 702 460 H150 Q110 460 110 420 Z" fill="url(#coverGrad)" />
-          <path d="M110 185 H710 Q742 185 742 217 V420 Q742 460 702 460 H150 Q110 460 110 420 Z" fill="none" stroke="#4166D4" stroke-opacity="0.25" stroke-width="5" />
-
-          <!-- Croce: più grande e più spessa, bottom-right, senza background -->
-          <g class="folderSvg__cross" transform="translate(682,412)" opacity="0.98">
-            <path d="M-18 0 v30 h-30 v18 h30 v30 h18 v-30 h30 v-18 h-30 v-30 z" fill="#4166D4" />
-          </g>
-
-          <!-- Titolo cartella (dentro) -->
-          <text x="410" y="292" text-anchor="middle" class="folderSvg__t1">STUDIO</text>
-          <text x="410" y="324" text-anchor="middle" class="folderSvg__t2">Dott. Francesco Biondi</text>
-          <text x="410" y="372" text-anchor="middle" class="folderSvg__t3">CLICCA PER APRIRE</text>
-        </g>
-      </svg>
-    </button>
-    <button class="folder__close" id="folderClose" type="button" aria-label="Chiudi cartella">×</button>
-
-
-    <!-- contenuto interno (solo 3 sezioni grandi) -->
-    <div class="folder__content" id="folderContent" aria-label="Contenuti cartella" hidden>
-      <div class="folder__tabs" role="tablist" aria-label="Sezioni">
-        <button class="tab is-active" type="button" role="tab" data-tab="treatments" aria-selected="true">
-          <span class="tab__title">TRATTAMENTI</span>
-          <span class="tab__sub">Viso</span>
-        </button>
-        <button class="tab" type="button" role="tab" data-tab="reviews" aria-selected="false">
-          <span class="tab__title">RECENSIONI</span>
-          <span class="tab__sub">Feedback</span>
-        </button>
-        <button class="tab" type="button" role="tab" data-tab="products" aria-selected="false">
-          <span class="tab__title">PRODOTTI</span>
-          <span class="tab__sub">Vetrina</span>
-        </button>
-      </div>
-
-      <div class="folder__panels">
-        <!-- TRATTAMENTI (clic → dettagli che si ingrandiscono) -->
-        <section class="panel is-active" id="panel-treatments" role="tabpanel">
-          <div class="cardGrid" id="treatmentsGrid"></div>
-        </section>
-
-        <!-- RECENSIONI -->
-        <section class="panel" id="panel-reviews" role="tabpanel" hidden>
-          <div class="reviewList" id="reviewsList"></div>
-        </section>
-
-        <!-- PRODOTTI (clic → dettagli che si ingrandiscono) -->
-        <section class="panel" id="panel-products" role="tabpanel" hidden>
-          <div class="cardGrid" id="productsGrid"></div>
-        </section>
-      </div>
-
-      <!-- Detail popover (treatments/products) -->
-      <div class="detail" id="detail" aria-hidden="true">
-        <div class="detail__backdrop" data-close-detail="1" aria-hidden="true"></div>
-        <div class="detail__card" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
-          <button class="iconClose" type="button" id="detailClose" aria-label="Chiudi">×</button>
-          <div class="detail__media" id="detailMedia" aria-hidden="true"></div>
-          <h3 class="detail__title" id="detailTitle"></h3>
-          <p class="detail__text" id="detailText"></p>
-          <ul class="detail__bullets" id="detailBullets"></ul>
-          <div class="detail__actions">
-            <button class="btn" type="button" id="detailCTA">Prenota</button>
-            <button class="btn ghost" type="button" data-close-detail="1">Indietro</button>
-          </div>
+    <section class="hero">
+        <div class="profile-container">
+            <img src="assets/img/propic.jpg" alt="Profile" class="hero-img">
         </div>
-      </div>
-    </div>
-  </div>
+        <h1>PORTFOLIO</h1>
+        <p>Video Editor & Content Strategist</p>
+    </section>
 
-  <!-- Footer -->
-  <footer class="footer" aria-label="Footer">
-    <span>© <span id="year"></span> Studio Medico • Tutti i diritti riservati</span>
-    <span class="sep" aria-hidden="true">•</span>
-    <a class="link" href="#" data-open="privacy">Privacy</a>
-    <span class="sep" aria-hidden="true">•</span>
-    <a class="link" href="#" data-open="terms">Termini</a>
-  </footer>
+    <div class="category-section">
+        <div class="category-header" onclick="toggleSection(this.parentElement)">
+            <h2>Mik Cosentino</h2>
+            <span class="icon">+</span>
+        </div>
+        <div class="video-grid">
+            <div class="video-card" onclick="openLightbox('assets/video/mik-redbull.mp4')">
+                <video muted loop playsinline><source src="assets/video/mik-redbull.mp4" type="video/mp4"></video>
+            </div>
+            </div>
+    </div>
 
-  <!-- Developer grid overlay (toggle with ?grid=1) -->
-  <div class="devGrid" aria-hidden="true"></div>
-</main>
+    <div class="category-section">
+        <div class="category-header" onclick="toggleSection(this.parentElement)">
+            <h2>Riccardo Ruggeri</h2>
+            <span class="icon">+</span>
+        </div>
+        <div class="video-grid">
+            <div class="video-card" onclick="openLightbox('assets/video/ruggeri-rolex.mp4')">
+                <video muted loop playsinline><source src="assets/video/ruggeri-rolex.mp4" type="video/mp4"></video>
+            </div>
+        </div>
+    </div>
 
-<!-- About dialog -->
-<section class="dialog" id="aboutDialog" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" aria-hidden="true">
-  <div class="dialog__backdrop" data-close="about" aria-hidden="true"></div>
-  <div class="dialog__box">
-    <div class="dialog__top">
-      <h3 id="aboutTitle">Chi sono</h3>
-      <button class="iconClose" data-close="about" type="button" aria-label="Chiudi">×</button>
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <video id="lightbox-video" controls autoplay></video>
     </div>
-    <p class="dialog__p">
-      Sono il <strong>Dott. Francesco Biondi</strong>. Il mio approccio in medicina estetica è basato su ascolto,
-      proporzioni e risultati naturali.
-    </p>
-    <ul class="dialog__ul">
-      <li>Valutazione personalizzata e anamnesi</li>
-      <li>Piani di trattamento per obiettivi realistici</li>
-      <li>Follow-up e mantenimento</li>
-    </ul>
-    <div class="dialog__actions">
-      <button class="btn" id="aboutCTA" type="button">Prenota</button>
-      <button class="btn ghost" data-close="about" type="button">Chiudi</button>
-    </div>
-  </div>
-</section>
 
-<!-- Contacts dialog -->
-<section class="dialog" id="contactsDialog" role="dialog" aria-modal="true" aria-labelledby="contactsTitle" aria-hidden="true">
-  <div class="dialog__backdrop" data-close="contacts" aria-hidden="true"></div>
-  <div class="dialog__box">
-    <div class="dialog__top">
-      <h3 id="contactsTitle">Contatti</h3>
-      <button class="iconClose" data-close="contacts" type="button" aria-label="Chiudi">×</button>
-    </div>
-    <div class="dialog__grid">
-      <div class="dialog__item">
-        <div class="dialog__k">WhatsApp</div>
-        <div class="dialog__v">+39 000 000 0000</div>
-      </div>
-      <div class="dialog__item">
-        <div class="dialog__k">Sede</div>
-        <div class="dialog__v">Catania (CT)</div>
-      </div>
-      <div class="dialog__item">
-        <div class="dialog__k">Email</div>
-        <div class="dialog__v">info@studiobiondi.it</div>
-      </div>
-      <div class="dialog__item">
-        <div class="dialog__k">Orari</div>
-        <div class="dialog__v">Lun–Ven 9:00–19:00</div>
-      </div>
-    </div>
-    <div class="dialog__actions">
-      <button class="btn" id="contactsCTA" type="button">Prenota</button>
-      <button class="btn ghost" data-close="contacts" type="button">Chiudi</button>
-    </div>
-  </div>
-</section>
-
-<script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
