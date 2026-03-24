@@ -4,7 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Video Editor</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- CSS INTEGRATO --- */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Helvetica', Arial, sans-serif;
+            margin: 0;
+            padding-bottom: 50px;
+        }
+
+        .hero { text-align: center; padding-top: 20px; }
+
+        .profile-wrapper {
+            width: 120px;
+            height: 120px;
+            margin: 20px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #ff3c3c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-section {
+            border-bottom: 1px solid #222;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0;
+            cursor: pointer;
+        }
+
+        .category-header h2 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; }
+
+        .video-grid {
+            display: none;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding-bottom: 30px;
+        }
+
+        .active .video-grid { display: grid; }
+        .active .icon { transform: rotate(45deg); color: #ff3c3c; }
+
+        .video-card {
+            aspect-ratio: 9/16;
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid #333;
+        }
+
+        video { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+        /* LIGHTBOX */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            width: 85%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        #lightbox-video {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255,60,60,0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            line-height: 1;
+        }
+    </style>
 </head>
 <body>
 
@@ -13,13 +113,13 @@
             <img src="assets/img/propic.jpg" alt="Profile" class="hero-img">
         </div>
         <h1>PORTFOLIO</h1>
-        <p>Video Editor & Content Strategist</p>
+        <p style="color: #888;">Video Editor & Content Strategist</p>
     </section>
 
     <div class="category-section">
         <div class="category-header" onclick="toggleSection(this.parentElement)">
             <h2>Mik Cosentino</h2>
-            <span class="icon">+</span>
+            <span class="icon" style="font-size: 24px;">+</span>
         </div>
         <div class="video-grid">
             <div class="video-card" onclick="openLightbox('assets/video/video1.mp4')">
@@ -34,7 +134,7 @@
     <div class="category-section">
         <div class="category-header" onclick="toggleSection(this.parentElement)">
             <h2>Riccardo Ruggeri</h2>
-            <span class="icon">+</span>
+            <span class="icon" style="font-size: 24px;">+</span>
         </div>
         <div class="video-grid">
             <div class="video-card" onclick="openLightbox('assets/video/video3.mp4')">
@@ -46,7 +146,7 @@
     <div class="category-section">
         <div class="category-header" onclick="toggleSection(this.parentElement)">
             <h2>Personale</h2>
-            <span class="icon">+</span>
+            <span class="icon" style="font-size: 24px;">+</span>
         </div>
         <div class="video-grid">
             <div class="video-card" onclick="openLightbox('assets/video/video4.mp4')">
@@ -56,12 +156,39 @@
     </div>
 
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <span class="close-btn">&times;</span>
         <div class="lightbox-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeLightbox()">&times;</span>
             <video id="lightbox-video" controls></video>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        /* --- JS INTEGRATO --- */
+        function toggleSection(section) {
+            section.classList.toggle('active');
+        }
+
+        function openLightbox(videoSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const video = document.getElementById('lightbox-video');
+            video.src = videoSrc;
+            lightbox.style.display = 'flex';
+            video.play();
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const video = document.getElementById('lightbox-video');
+            lightbox.style.display = 'none';
+            video.pause();
+            video.src = "";
+        }
+
+        // Hover play per i video della griglia
+        document.querySelectorAll('.video-card video').forEach(v => {
+            v.parentElement.addEventListener('mouseenter', () => v.play());
+            v.parentElement.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
+        });
+    </script>
 </body>
 </html>
