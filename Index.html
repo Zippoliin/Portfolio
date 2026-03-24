@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Video Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <section class="hero">
+        <div class="profile-wrapper">
+            <img src="assets/img/propic.jpg" alt="Profile" class="hero-img">
+        </div>
+        <h1>PORTFOLIO</h1>
+        <p>Video Editor & Content Strategist</p>
+    </section>
+
+    <div class="category-section">
+        <div class="category-header" onclick="toggleSection(this.parentElement)">
+            <h2>Mik Cosentino</h2>
+            <span class="icon">+</span>
+        </div>
+        <div class="video-grid">
+            <div class="video-card" onclick="openLightbox('assets/video/video1.mp4')">
+                <video muted loop playsinline><source src="assets/video/video1.mp4" type="video/mp4"></video>
+            </div>
+            <div class="video-card" onclick="openLightbox('assets/video/video2.mp4')">
+                <video muted loop playsinline><source src="assets/video/video2.mp4" type="video/mp4"></video>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <div class="category-header" onclick="toggleSection(this.parentElement)">
+            <h2>Riccardo Ruggeri</h2>
+            <span class="icon">+</span>
+        </div>
+        <div class="video-grid">
+            <div class="video-card" onclick="openLightbox('assets/video/video3.mp4')">
+                <video muted loop playsinline><source src="assets/video/video3.mp4" type="video/mp4"></video>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <div class="category-header" onclick="toggleSection(this.parentElement)">
+            <h2>Personale</h2>
+            <span class="icon">+</span>
+        </div>
+        <div class="video-grid">
+            <div class="video-card" onclick="openLightbox('assets/video/video4.mp4')">
+                <video muted loop playsinline><source src="assets/video/video4.mp4" type="video/mp4"></video>
+            </div>
+        </div>
+    </div>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <video id="lightbox-video" controls></video>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
